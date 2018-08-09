@@ -31,3 +31,11 @@ export const signup = user => dispatch => (
   ApiUtil.signup(user).then(user => dispatch(receiveCurrentUser(user)),
   err => (dispatch(receiveErrors(err.responseJSON))))
 );
+//
+// export const signup = user => dispatch => {
+//   // debugger
+//   return(
+//   ApiUtil.signup(user).then(user => dispatch(receiveCurrentUser(user))),
+//   err => (dispatch(receiveErrors(err.responseJSON)))
+// );
+// };
