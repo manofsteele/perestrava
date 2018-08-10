@@ -3,16 +3,21 @@ import { Link } from 'react-router-dom';
 
 
   const Navbar = ({ currentUser, logout }) => {
+
     const sessionLinks = () => (
+      <div className="navbar">
+      <label className="logo">Perestrava</label>
       <nav className="login-signup">
-        <Link to="/login">Login</Link>
-        <Link to="/signup">Sign Up</Link>
+        <Link className="navlink" to="/login">Log In</Link>
+        <Link className="navlink" to="/signup">Sign Up</Link>
       </nav>
+      </div>
     );
 
     const greeting = () => (
       <hgroup className="header-group">
-        <h2 className="header-name">Welcome, {currentUser.username}</h2>
+        <h1>Perestrava</h1>
+        <p className="header-name">Welcome, {currentUser.username}</p>
         <button className="header-button" onClick={logout}>Log Out</button>
       </hgroup>
     );

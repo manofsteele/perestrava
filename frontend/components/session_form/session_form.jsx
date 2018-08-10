@@ -47,6 +47,7 @@ class SessionForm extends React.Component {
   render() {
     return (
       <div className="login-form-container">
+        <div className="login-panel">
         <form onSubmit={this.handleSubmit} className="login-form-box">
           Welcome to Perestrava!
           <br/>
@@ -55,6 +56,7 @@ class SessionForm extends React.Component {
           <div className="login-form">
             <br/>
             <label>Username:
+            <br/>
               <input type="text"
                 value={this.state.username}
                 onChange={this.update('username')}
@@ -63,6 +65,7 @@ class SessionForm extends React.Component {
             </label>
             <br/>
             <label>Email address:
+            <br/>
               <input type="email"
                 value={this.state.email}
                 onChange={this.update('email')}
@@ -71,6 +74,7 @@ class SessionForm extends React.Component {
             </label>
             <br/>
             <label>Password:
+            <br/>
               <input type="password"
                 value={this.state.password}
                 onChange={this.update('password')}
@@ -81,7 +85,8 @@ class SessionForm extends React.Component {
             <input className="session-submit" type="submit" value={this.props.formType} />
           </div>
           </form>
-          <button className="session-submit" type="submit" onClick={this.demoLogin}>Login as Guest</button>
+          <button className="demo-submit" type="submit" onClick={this.demoLogin}>Login as Guest</button>
+        </div>
         </div>
       );
     }

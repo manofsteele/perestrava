@@ -1,0 +1,49 @@
+.login-form-container {
+  text-align: center;
+  display: block;
+  position: center;
+  font-family: 'Ubuntu', sans-serif;
+  background-image: url("bike-under-banyans.jpg");
+  background-position: center bottom;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 100px;
+}
+
+.login-panel {
+  margin-top: 100px;
+  padding-top: 50px;
+  height: 350px;
+  width: 300px;
+  background: rgba(0,0,0,0.75);
+  margin: 0 auto;
+  color: white;
+  z-index: 1;
+  border-radius: 5px;
+}
+
+.login-form-box {
+  display: inline;
+  position: center;
+}
+
+.login-form > label {
+}
+
+.login-input {
+  border: 1px solid #e6e6eb;
+  margin-bottom: 20px;
+}
+
+.session-submit, .demo-submit {
+  border: 1px solid #e6e6eb;
+  border-radius: 2px;
+  padding: 5px 30px;
+  margin-bottom: 20px;
+  background-color: #338EFC;
+}
+
+.demo-submit {
+  background-color: #8A5AFC;
+}
