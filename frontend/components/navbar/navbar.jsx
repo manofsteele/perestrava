@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
     const sessionLinks = () => (
       <div className="navbar">
-      <label className="logo">Perestrava</label>
+      <a href="#/login" className="logo">Perestrava</a>
       <nav className="login-signup">
         <Link className="navlink" to="/login">Log In</Link>
         <Link className="navlink" to="/signup">Sign Up</Link>

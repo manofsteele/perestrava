@@ -36,7 +36,7 @@ class SessionForm extends React.Component {
     return(
       <ul>
         {this.props.errors.map((error, i) => (
-          <li key={`error-${i}`}>
+          <li class="errors" key={`error-${i}`}>
             {error}
           </li>
         ))}
@@ -47,6 +47,15 @@ class SessionForm extends React.Component {
   render() {
     return (
       <div className="login-form-container">
+
+        <div className="splash-text">
+          <h1 class="first-head">Run. Ride. Repeat.</h1>
+          <h1 class="second-head">Map. Measure. Marvel.</h1>
+          <h2> <a href="#/login" class="logo">Perestrava.</a> </h2>
+          <h2> Precision and Performance. </h2>
+          <h3>An app for athletes of all levels to track their rides and runs.</h3>
+        </div>
+
         <div className="login-panel">
         <form onSubmit={this.handleSubmit} className="login-form-box">
           Welcome to Perestrava!

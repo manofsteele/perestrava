@@ -1,17 +1,60 @@
 .login-form-container {
   text-align: center;
-  display: block;
+  display: flex;
   position: center;
-  font-family: 'Ubuntu', sans-serif;
-  background-image: url("bike-under-banyans.jpg");
-  background-position: center bottom;
+  font-family: 'Russo', sans-serif;
+  // background-image: url("bike-under-banyans.jpg");
+  background-image: url("solo-woman-rider.jpg");
+  background-position: center right;
   height: 100%;
   background-size: cover;
   background-repeat: no-repeat;
-  padding: 100px;
+  padding: 50px;
+}
+
+.splash-text {
+  font-family: 'Russo', sans-serif;
+  color: #AA18F2;
+  text-shadow: 1px 1px black;
+  height: 400px;
+  width: 300px;
+  position: relative;
+}
+
+.splash-text > h1 {
+  font-size: 40px;
+  margin-bottom: 30px;
+  font-weight: 700;
+}
+
+.second-head {
+  font-style: italic;
+}
+
+
+.splash-text > h2 {
+  margin-top: 20px;
+  font-size: 30px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #0013E5;
+}
+
+h2 > .logo {
+  letter-spacing: 1px;
+  font-size: 40px;
+}
+.splash-text > h3 {
+  margin-top: 30px;
+  font-size: 20px;
+  letter-spacing: 1px;
+  font-weight: 500;
+  font-style: italic;
+
 }
 
 .login-panel {
+  font-family: 'Ubuntu', sans-serif;
   margin-top: 100px;
   padding-top: 50px;
   height: 350px;
@@ -21,6 +64,8 @@
   color: white;
   z-index: 1;
   border-radius: 5px;
+  margin-right: 40%;
+  letter-spacing: 0.5px;
 }
 
 .login-form-box {
@@ -28,7 +73,13 @@
   position: center;
 }
 
-.login-form > label {
+.login-form-box > a {
+  color: #AA18F2;
+  text-shadow: 1px 1px black;
+}
+
+.login-form-box > a:hover {
+  color: #8A5AFC;
 }
 
 .login-input {
@@ -45,5 +96,13 @@
 }
 
 .demo-submit {
-  background-color: #8A5AFC;
+  background-color: #AA18F2;
+}
+
+.session-submit:hover, .demo-submit:hover {
+    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
+}
+
+.errors {
+  color: red;
 }
