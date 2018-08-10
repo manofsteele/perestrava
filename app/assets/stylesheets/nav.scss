@@ -13,6 +13,7 @@
   font-size: 30px;
   text-transform: uppercase;
   padding-left: 20px;
+  margin-top: 15px;
 }
 
 .login-signup {
@@ -36,6 +37,15 @@
   display: flex;
   justify-content: space-between;
   padding: 10px 0;
+}
+
+.header-name {
+  font-family: 'Ubuntu', sans-serif;
+  text-align: center;
+  font-size: 15px;
+  color: #0013E5;
+  margin-bottom: 20px;
+  margin-top: 25px;
 }
 
 .navlink {

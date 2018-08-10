@@ -4,7 +4,12 @@
   position: center;
   font-family: 'Russo', sans-serif;
   // background-image: url("bike-under-banyans.jpg");
+
+  // this one is for heroku
   background-image: image-url('solo-woman-rider.JPG');
+  // and this one works on localhost:3000
+  // background-image: url('solo-woman-rider.jpg');
+
   background-position: center right;
   height: 100%;
   background-size: cover;
@@ -57,7 +62,7 @@ h2 > .logo {
   font-family: 'Ubuntu', sans-serif;
   margin-top: 100px;
   padding-top: 50px;
-  height: 350px;
+  height: 400px;
   width: 300px;
   background: rgba(0,0,0,0.75);
   margin: 0 auto;
@@ -66,6 +71,11 @@ h2 > .logo {
   border-radius: 5px;
   margin-right: 40%;
   letter-spacing: 0.5px;
+}
+
+.login-errors {
+  height: 40px;
+  text-shadow: 1px 1px black;
 }
 
 .login-form-box {

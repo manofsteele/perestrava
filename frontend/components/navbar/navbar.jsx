@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
     const sessionLinks = () => (
       <div className="navbar">
-      <a href="#/login" className="logo">Perestrava</a>
+      <a href="#/" className="logo">Perestrava</a>
       <nav className="login-signup">
         <Link className="navlink" to="/login">Log In</Link>
         <Link className="navlink" to="/signup">Sign Up</Link>
@@ -16,9 +16,9 @@ import { Link } from 'react-router-dom';
 
     const greeting = () => (
       <hgroup className="header-group">
-        <h1>Perestrava</h1>
+        <a href="#/" className="logo">Perestrava</a>
         <p className="header-name">Welcome, {currentUser.username}</p>
-        <button className="header-button" onClick={logout}>Log Out</button>
+        <button className="navlink" onClick={logout}>Log Out</button>
       </hgroup>
     );
 
