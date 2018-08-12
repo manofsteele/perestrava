@@ -6,10 +6,11 @@ import {Route, Redirect, Switch, Link, HashRouter } from 'react-router-dom';
 import SignupFormContainer from './session_form/signup_form_container';
 import LoginFormContainer from './session_form/login_form_container';
 import NavbarContainer from './navbar/navbar_container';
+import RouteCreatorContainer from './routes/route_creator_container';
 import NotFound from './not_found';
 import Splash from './splash';
 
-import { AuthRoute } from '../util/route_util';
+import { AuthRoute, ProtectedRoute } from '../util/route_util';
 
 const App = () => (
   <div className="mainPage">
@@ -19,6 +20,7 @@ const App = () => (
     <Switch>
       <AuthRoute exact path="/login" component={LoginFormContainer} />
       <AuthRoute exact path="/signup" component={SignupFormContainer} />
+      <ProtectedRoute exact path="/routes/new" component={RouteCreatorContainer} />
       <Route exact path="/" component={Splash} />
       <Route exact path="/not_found" component={NotFound} />
       <Redirect to="/not_found" />

@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import Root from './components/root';
 import configureStore from './store/store';
 // import * as ApiUtil from './util/session_api_util';
+import * as RouteApiUtil from './util/route_api_util';
+import * as RouteActions from './actions/route_actions';
 
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.getElementById("root");
@@ -25,6 +27,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // window.login = ApiUtil.login;
   // window.logout = ApiUtil.logout;
   // window.signup = ApiUtil.signup;
+  window.fetchRoute = RouteActions.fetchRoute;
+  window.fetchRoutes = RouteActions.fetchRoutes;
+  window.createRoute = RouteActions.createRoute;
+
   window.getState = store.getState;
   window.dispatch = store.dispatch;
 });
