@@ -16,9 +16,12 @@
 
 html, body, main, .mainPage {
   height: 100%;
+
 }
 
 .map {
-  width: 500px;
-  height: 500px;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
