@@ -1,3 +1,89 @@
 // Place all the styles related to the api/routes controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.map-container {
+  display: block;
+  width: 100%;
+}
+
+.map-tool-bar, .route-stats-bar {
+  height: 50px;
+  background-color: #F1F1F1;
+  display: flex;
+  font-family: 'Russo', sans-serif;
+}
+
+.map-tool-bar > .button {
+  display: inline-block;
+  min-width: 40px;
+  padding: 6px 10px;
+  text-align: center;
+}
+
+.search-button {
+  margin: 2px;
+  padding: 7px 20px;
+  vertical-align: bottom;
+  font-size: 12px;
+  width: 24px;
+  border: 1px solid #ccccd1;
+}
+.button-label {
+  bottom: 0;
+  font-size: 12px;
+}
+
+.float-right {
+  float: right;
+  display: block;
+}
+
+.button-save {
+  float: right;
+  text-align: center;
+  position: absolute;
+  right: 0;
+  padding: 14px 15px;
+  margin: 5px;
+  margin-left: 10px;
+  display: inline-block;
+  background-color: #fc4c02;
+  border-radius: 2px;
+  color: white;
+  font-size: 12px;
+}
+
+.button-save:hover, .search-button:hover {
+  box-shadow: inset 0 0 100px 100px rgba(1, 1, 1, 0.1);
+}
+
+.map-tool-bar > .button:hover {
+  background-color: #d3d3d3
+}
+
+.location-search {
+  width: 180px;
+  padding: 12px;
+  font-size: 15px;
+  font-family: 'Russo', sans-serif;
+  background-color: white;
+  margin: 4px;
+  margin-left: 10px;
+}
+
+.map {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.route-stats-bar {
+  position: absolute;
+  bottom: 30px;
+  display: block;
+  width: 98%;
+  // align-items: center;
+  left: 10px;
+}
