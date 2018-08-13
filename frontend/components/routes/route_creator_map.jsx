@@ -20,9 +20,10 @@ const mapOptions = {
   },
   zoom: 13,
   clickableIcons: false,
+  gestureHandling: 'greedy',
   styles: mapStyles['hide'],
   zoomControlOptions: {
-             position: google.maps.ControlPosition.LEFT_TOP
+    position: google.maps.ControlPosition.LEFT_TOP
   }
 };
 
@@ -33,7 +34,8 @@ class RouteCreatorMap extends React.Component {
   constructor(props) {
     super(props);
     this.placeMarkerAndPanTo = this.placeMarkerAndPanTo.bind(this);
-
+    this.calculateAndDisplayRoute = this.calculateAndDisplayRoute.bind(this);
+    this.markers = [];
 
   }
 
@@ -41,6 +43,8 @@ class RouteCreatorMap extends React.Component {
   componentDidMount() {
     const map = this.refs.map;
     this.map = new google.maps.Map(map, mapOptions);
+    this.directionsService = new google.maps.DirectionsService;
+    this.directionsDisplay = new google.maps.DirectionsRenderer;
 
     this.map.addListener('click', (e) => {
       this.placeMarkerAndPanTo(e.latLng, map);
@@ -57,7 +61,38 @@ class RouteCreatorMap extends React.Component {
     });
     this.map.panTo(latLng);
     marker.setMap(this.map);
+    this.markers.push(marker);
+    if (this.markers.length > 1) {
+      this.calculateAndDisplayRoute(this.DirectionsService, this.directionsDisplay);
+    }
   }
+
+// this function taken from
+// https://developers.google.com/maps/documentation/javascript/directions#Waypoints
+
+  calculateAndDisplayRoute(directionsService, directionsDisplay) {
+    directionsService.route({
+      origin: this.markers[0].position,
+      destination: this.markers[this.markers.length - 1].position,
+      waypoints: this.markers.slice(1, this.markers.length - 1),
+      optimizeWaypoints: true,
+      travelMode: 'BICYCLING',
+    }, function(response, status) {
+      directionsDisplay.setDirections(response);
+      var route = response.routes[0];
+        var summaryPanel = document.getElementById('directions-panel');
+        summaryPanel.innerHTML = '';
+        // For each route, display summary information.
+        for (var i = 0; i < route.legs.length; i++) {
+          var routeSegment = i + 1;
+        summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+            '</b><br>';
+        summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+        summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+        summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+    }
+  });
+}
 
   render() {
 
@@ -98,7 +133,26 @@ class RouteCreatorMap extends React.Component {
         </div>
         <div className="route-stats-bar">
           <ul>
-
+            <li>
+               <strong id=""></strong>
+               <div className="button-label" >Route Type</div>
+            </li>
+            <li>
+               <strong id=""></strong>
+               <div className="button-label" >Distance</div>
+            </li>
+            <li>
+               <strong id=""></strong>
+               <div className="button-label" >Elevation Gain</div>
+            </li>
+            <li>
+               <strong id=""></strong>
+               <div className="button-label" >Estimated Moving Time</div>
+            </li>
+            <li>
+               <strong id=""></strong>
+               <div className="button-label" ></div>
+            </li>
           </ul>
         </div>
       </div>

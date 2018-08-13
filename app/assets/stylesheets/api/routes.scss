@@ -77,6 +77,7 @@
   margin: 0;
   padding: 0;
   height: 100%;
+  position: relative;
 }
 
 .route-stats-bar {
@@ -86,4 +87,19 @@
   width: 98%;
   // align-items: center;
   left: 10px;
+}
+
+.route-stats-bar > ul > li {
+  display: inline-block;
+  color: grey;
+  list-style: none;
+  margin-right: 50px;
+}
+
+.route-stats-bar > ul > li > label {
+  color: black;
+}
+
+.route-stats-bar > ul > li > strong {
+  display: block;
 }
