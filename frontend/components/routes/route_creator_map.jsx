@@ -36,8 +36,14 @@ class RouteCreatorMap extends React.Component {
     this.placeMarkerAndPanTo = this.placeMarkerAndPanTo.bind(this);
     this.calculateAndDisplayRoute = this.calculateAndDisplayRoute.bind(this);
     this.clearMarkers = this.clearMarkers.bind(this);
+    this.undoMarker = this.undoMarker.bind(this);
     this.markers = [];
     this.locations = [];
+    this.lastMarker = null;
+    this.state = {
+      distance: 0,
+      duration: 0,
+    };
 
   }
 
@@ -90,9 +96,16 @@ class RouteCreatorMap extends React.Component {
       waypoints: positions.slice(1, positions.length - 1),
       optimizeWaypoints: true,
       travelMode: 'BICYCLING',
-    }, function(response, status) {
+    }, (response, status) => {
       directionsDisplay.setDirections(response);
       let route = response.routes[0];
+      for (let i = 0; i < response.routes[0].legs.length; i++) {
+        this.setState({
+          distance: this.state.distance + parseFloat(response.routes[0].legs[i].distance.value),
+          duration: this.state.duration + parseFloat(response.routes[0].legs[i].duration.value)
+        });
+        console.log(response.routes[0].legs[i].duration.value);
+      }
 
       // this summary panel came from google, not using it so far...
 
@@ -117,10 +130,16 @@ class RouteCreatorMap extends React.Component {
     this.markers = [];
     this.locations = [];
     this.directionsDisplay.set('directions', null);
-    }
+  }
+
+  undoMarker() {
+    this.lastMarker = this.markers.pop();
+    this.lastMarker.setMap(null);
+    this.locations.pop();
+    this.calculateAndDisplayRoute(this.directionsService, this.directionsDisplay);
+  }
 
   render() {
-
     return (
       <div className="map-container">
         <div className="map-tool-bar">
@@ -130,7 +149,8 @@ class RouteCreatorMap extends React.Component {
           <div className= "search-button" title="Search">
             <div className="search-icon"></div>
           </div>
-          <div className="button" title="Undo last marker">
+          <div className="button" title="Undo last marker"
+            onClick={this.undoMarker}>
             <div className="button-label">Undo</div>
           </div>
           <div className="button" title="Redo last marker">
@@ -164,7 +184,7 @@ class RouteCreatorMap extends React.Component {
                <div className="button-label" >Route Type</div>
             </li>
             <li>
-               <strong id=""></strong>
+               <strong id="">{this.state.distance}</strong>
                <div className="button-label" >Distance</div>
             </li>
             <li>
@@ -172,7 +192,7 @@ class RouteCreatorMap extends React.Component {
                <div className="button-label" >Elevation Gain</div>
             </li>
             <li>
-               <strong id=""></strong>
+               <strong id="">{this.state.duration / 60}</strong>
                <div className="button-label" >Estimated Moving Time</div>
             </li>
             <li>
