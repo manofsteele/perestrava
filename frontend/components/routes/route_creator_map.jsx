@@ -35,6 +35,7 @@ class RouteCreatorMap extends React.Component {
     super(props);
     this.placeMarkerAndPanTo = this.placeMarkerAndPanTo.bind(this);
     this.calculateAndDisplayRoute = this.calculateAndDisplayRoute.bind(this);
+    this.clearMarkers = this.clearMarkers.bind(this);
     this.markers = [];
     this.locations = [];
 
@@ -93,21 +94,30 @@ class RouteCreatorMap extends React.Component {
       directionsDisplay.setDirections(response);
       let route = response.routes[0];
 
-    // this summary panel came from google, not using it so far...
+      // this summary panel came from google, not using it so far...
 
-    //     var summaryPanel = document.getElementById('directions-panel');
-    //     summaryPanel.innerHTML = '';
-    //     // For each route, display summary information.
-    //     for (var i = 0; i < route.legs.length; i++) {
-    //       var routeSegment = i + 1;
-    //     summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
-    //         '</b><br>';
-    //     summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-    //     summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-    //     summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
-    // }
-  });
-}
+      //     var summaryPanel = document.getElementById('directions-panel');
+      //     summaryPanel.innerHTML = '';
+      //     // For each route, display summary information.
+      //     for (var i = 0; i < route.legs.length; i++) {
+      //       var routeSegment = i + 1;
+      //     summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+      //         '</b><br>';
+      //     summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+      //     summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+      //     summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+      // }
+    });
+  }
+
+  clearMarkers() {
+    this.markers.forEach(marker => {
+      marker.setMap(null);
+    });
+    this.markers = [];
+    this.locations = [];
+    this.directionsDisplay.set('directions', null);
+    }
 
   render() {
 
@@ -126,7 +136,8 @@ class RouteCreatorMap extends React.Component {
           <div className="button" title="Redo last marker">
             <div className="button-label">Redo</div>
           </div>
-          <div className="button" title="Clear all markers">
+          <div className="button" title="Clear all markers"
+            onClick={this.clearMarkers}>
             <div className="button-label">Clear</div>
           </div>
           <div className="button" title="Ride">
