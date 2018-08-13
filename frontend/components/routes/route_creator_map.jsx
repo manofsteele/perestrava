@@ -52,6 +52,7 @@ class RouteCreatorMap extends React.Component {
     this.labelIndex = 0;
     this.directionsService = new google.maps.DirectionsService();
     this.directionsDisplay = new google.maps.DirectionsRenderer();
+    this.directionsDisplay.setMap(this.map);
   }
 
   placeMarkerAndPanTo(latLng, map) {
@@ -61,7 +62,6 @@ class RouteCreatorMap extends React.Component {
       label: this.labels[this.labelIndex++ % this.labels.length],
     });
     let markerPos = marker.getPosition().lat();
-    debugger
 
     this.map.panTo(latLng);
     this.locations.push(latLng);
@@ -78,41 +78,22 @@ class RouteCreatorMap extends React.Component {
 
   calculateAndDisplayRoute(directionsService, directionsDisplay) {
 
-    //from the second try at getting positions:
-
-    // let positions = [];
-    // this.markers.forEach((marker, index) => {
-    //   positions.push({location: {lat: parseFloat(marker.position.lat), lng: parseFloat(marker.position.lng)}});
-    // });
-
-    // from the third try at getting positions:
     let positions = [];
     this.locations.forEach(location => {
       positions.push({location: {lat: location.lat(), lng: location.lng()}});
     });
     this.directionsService.route({
 
-      //this is the third try at getting positions
-
-
-      // this was the second pass at getting the positions
-
       origin: {lat: positions[0].location.lat, lng: positions[0].location.lng},
       destination: {lat: positions[positions.length - 1].location.lat, lng: positions[positions.length -1].location.lng},
       waypoints: positions.slice(1, positions.length - 1),
-
-      // below was the first pass at getting the positions
-
-      // origin: this.markers[0].position,
-      // destination: this.markers[this.markers.length - 1].position,
-      // waypoints: this.markers.slice(1, this.markers.length - 1),
       optimizeWaypoints: true,
       travelMode: 'BICYCLING',
     }, function(response, status) {
       directionsDisplay.setDirections(response);
       let route = response.routes[0];
 
-    // this summary panel came from google, not sure what it's for...
+    // this summary panel came from google, not using it so far...
 
     //     var summaryPanel = document.getElementById('directions-panel');
     //     summaryPanel.innerHTML = '';
