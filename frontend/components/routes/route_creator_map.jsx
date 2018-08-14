@@ -6,11 +6,11 @@ import { withRouter } from 'react-router-dom';
 
 const mapStyles = {
   hide: [
-  {featureType: "poi",
-  elementType: "labels",
-  stylers: [{visibility: "off"}]
-}
-]
+    {featureType: "poi",
+    elementType: "labels",
+    stylers: [{visibility: "off"}]
+    }
+  ]
 };
 
 const mapOptions = {
@@ -44,8 +44,7 @@ class RouteCreatorMap extends React.Component {
 
     this.markers = [];
     this.removedMarkers = [];
-    // this.locations = [];
-    // this.lastMarker = null;
+
     this.path = {}; // this is for calculating elevations
     this.state = {
       distance: 0,
@@ -142,7 +141,7 @@ class RouteCreatorMap extends React.Component {
     this.markers.forEach(marker => {
       let location = { location: { lat: marker.position.lat(), lng: marker.position.lng() } };
       positions.push(location);
-      path.push(location);
+      path.push({lat: marker.position.lat(), lng: marker.position.lng()});
       // positions.push({location: {lat: location.lat(), lng: location.lng()}});
       // path.push({lat: location.lat(), lng: location.lng()});
     });
@@ -180,16 +179,6 @@ class RouteCreatorMap extends React.Component {
       'samples': 256
     }, this.plotElevation);
   }
-
-  // first version of undoMarker
-
-  // undoMarker() {
-  //   this.lastMarker = this.markers.pop();
-  //   this.lastMarker.setMap(null);
-  //   this.locations.pop();
-  //   this.calculateAndDisplayRoute(this.directionsService, this.directionsDisplay);
-  //   this.labelIndex -= 1;
-  // }
 
   undo() {
     if (this.markers.length > 0) {
@@ -260,16 +249,6 @@ class RouteCreatorMap extends React.Component {
       });
      }
   }
-  // first version of clearMarkers
-  //
-  // clearMarkers() {
-  //   this.markers.forEach(marker => {
-  //     marker.setMap(null);
-  //   });
-  //   this.markers = [];
-  //   this.locations = [];
-  //   this.directionsDisplay.set('directions', null);
-  // }
 
   // below is from Google Maps API page,
   // https://developers.google.com/maps/documentation/javascript/examples/elevation-paths
@@ -370,11 +349,14 @@ class RouteCreatorMap extends React.Component {
                  <strong id="">{this.state.duration / 60}</strong>
                  <div className="button-label" >Estimated Moving Time</div>
               </li>
-              <li>
-                 <strong id=""></strong>
-                 <div className="button-label" ></div>
+              <li id="show-elevation">
+                 <strong id=""> </strong>
+                 <div className="button-label" >Show Elevation</div>
               </li>
-            </ul>
+              <li className="hidden" id="hide-elevation">
+                 <strong id=""> </strong>
+                 <div className="button-label" >Hide Elevation</div>
+              </li>            </ul>
           </div>
           <div className="elevation-chart" id="elevation_chart">
 
