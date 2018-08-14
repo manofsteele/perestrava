@@ -80,7 +80,7 @@
   position: relative;
 }
 
-.route-stats-bar {
+.bottom-panel {
   position: absolute;
   bottom: 30px;
   display: block;
@@ -88,6 +88,14 @@
   // align-items: center;
   left: 10px;
 }
+// .route-stats-bar {
+//   position: absolute;
+//   bottom: 30px;
+//   display: block;
+//   width: 98%;
+//   // align-items: center;
+//   left: 10px;
+// }
 
 .route-stats-bar > ul > li {
   display: inline-block;
@@ -102,4 +110,10 @@
 
 .route-stats-bar > ul > li > strong {
   display: block;
+}
+
+.elevation-chart {
+  height: 150px;
+  z-index: 5;
+  background: white;
 }

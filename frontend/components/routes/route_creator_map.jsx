@@ -37,9 +37,12 @@ class RouteCreatorMap extends React.Component {
     this.calculateAndDisplayRoute = this.calculateAndDisplayRoute.bind(this);
     this.clearMarkers = this.clearMarkers.bind(this);
     this.undoMarker = this.undoMarker.bind(this);
+    this.plotElevation = this.plotElevation.bind(this);
+
     this.markers = [];
     this.locations = [];
     this.lastMarker = null;
+    this.path = {}; // this is for calculating elevations
     this.state = {
       distance: 0,
       duration: 0,
@@ -59,8 +62,15 @@ class RouteCreatorMap extends React.Component {
     this.labelIndex = 0;
     this.directionsService = new google.maps.DirectionsService();
     this.directionsDisplay = new google.maps.DirectionsRenderer();
+    this.elevator = new google.maps.ElevationService;
     this.directionsDisplay.setMap(this.map);
+    // this.chart = new google.visualization.ColumnChart(chartDiv);
+    this.geocoder = new google.maps.Geocoder();
+
+
   }
+
+
 
   placeMarkerAndPanTo(latLng, map) {
     let marker = new google.maps.Marker({
@@ -86,8 +96,10 @@ class RouteCreatorMap extends React.Component {
   calculateAndDisplayRoute(directionsService, directionsDisplay) {
 
     let positions = [];
+    let path = [];
     this.locations.forEach(location => {
       positions.push({location: {lat: location.lat(), lng: location.lng()}});
+      path.push({lat: location.lat(), lng: location.lng()});
     });
     this.directionsService.route({
 
@@ -104,23 +116,59 @@ class RouteCreatorMap extends React.Component {
           distance: this.state.distance + parseFloat(response.routes[0].legs[i].distance.value),
           duration: this.state.duration + parseFloat(response.routes[0].legs[i].duration.value)
         });
-        console.log(response.routes[0].legs[i].duration.value);
       }
-
-      // this summary panel came from google, not using it so far...
-
-      //     var summaryPanel = document.getElementById('directions-panel');
-      //     summaryPanel.innerHTML = '';
-      //     // For each route, display summary information.
-      //     for (var i = 0; i < route.legs.length; i++) {
-      //       var routeSegment = i + 1;
-      //     summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
-      //         '</b><br>';
-      //     summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-      //     summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-      //     summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
-      // }
     });
+    this.elevator.getElevationAlongPath({
+      'path': path,
+      'samples': 256
+    }, this.plotElevation);
+  }
+
+// below is from Google Maps API page,
+// https://developers.google.com/maps/documentation/javascript/examples/elevation-paths
+
+  plotElevation(elevations, status) {
+    debugger;
+          var chartDiv = document.getElementById('elevation_chart');
+          if (status !== 'OK') {
+            // Show the error code inside the chartDiv.
+            chartDiv.innerHTML = 'Cannot show elevation: request failed because ' +
+                status;
+            return;
+          }
+          // Create a new chart in the elevation_chart DIV.
+          let chart = new google.visualization.ColumnChart(chartDiv);
+
+          // Extract the data from which to populate the chart.
+          // Because the samples are equidistant, the 'Sample'
+          // column here does double duty as distance along the
+          // X axis.
+          let data = new google.visualization.DataTable();
+          data.addColumn('string', 'Sample');
+          data.addColumn('number', 'Elevation');
+          for (var i = 0; i < elevations.length; i++) {
+            data.addRow(['', elevations[i].elevation]);
+          }
+
+          // Draw the chart using the data within its DIV.
+          chart.draw(data, {
+            height: 150,
+            legend: 'none',
+            titleY: 'Elevation (m)'
+          });
+        }
+
+
+  // searchAddressAndRecenterMap() {
+  //   this.geocoder...
+  // }
+
+  undoMarker() {
+    this.lastMarker = this.markers.pop();
+    this.lastMarker.setMap(null);
+    this.locations.pop();
+    this.calculateAndDisplayRoute(this.directionsService, this.directionsDisplay);
+    this.labelIndex -= 1;
   }
 
   clearMarkers() {
@@ -132,12 +180,7 @@ class RouteCreatorMap extends React.Component {
     this.directionsDisplay.set('directions', null);
   }
 
-  undoMarker() {
-    this.lastMarker = this.markers.pop();
-    this.lastMarker.setMap(null);
-    this.locations.pop();
-    this.calculateAndDisplayRoute(this.directionsService, this.directionsDisplay);
-  }
+
 
   render() {
     return (
@@ -177,29 +220,34 @@ class RouteCreatorMap extends React.Component {
           Map
 
         </div>
-        <div className="route-stats-bar">
-          <ul>
-            <li>
-               <strong id=""></strong>
-               <div className="button-label" >Route Type</div>
-            </li>
-            <li>
-               <strong id="">{this.state.distance}</strong>
-               <div className="button-label" >Distance</div>
-            </li>
-            <li>
-               <strong id=""></strong>
-               <div className="button-label" >Elevation Gain</div>
-            </li>
-            <li>
-               <strong id="">{this.state.duration / 60}</strong>
-               <div className="button-label" >Estimated Moving Time</div>
-            </li>
-            <li>
-               <strong id=""></strong>
-               <div className="button-label" ></div>
-            </li>
-          </ul>
+        <div className="bottom-panel">
+          <div className="route-stats-bar">
+            <ul>
+              <li>
+                 <strong id=""></strong>
+                 <div className="button-label" >Route Type</div>
+              </li>
+              <li>
+                 <strong id="">{this.state.distance}</strong>
+                 <div className="button-label" >Distance</div>
+              </li>
+              <li>
+                 <strong id=""></strong>
+                 <div className="button-label" >Elevation Gain</div>
+              </li>
+              <li>
+                 <strong id="">{this.state.duration / 60}</strong>
+                 <div className="button-label" >Estimated Moving Time</div>
+              </li>
+              <li>
+                 <strong id=""></strong>
+                 <div className="button-label" ></div>
+              </li>
+            </ul>
+          </div>
+          <div className="elevation-chart" id="elevation_chart">
+
+          </div>
         </div>
       </div>
     );
