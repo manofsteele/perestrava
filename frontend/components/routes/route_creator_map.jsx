@@ -40,6 +40,7 @@ class RouteCreatorMap extends React.Component {
     this.redo = this.redo.bind(this);
     this.plotElevation = this.plotElevation.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.handleWorkoutTypeToggle = this.handleWorkoutTypeToggle.bind(this);
 
     this.markers = [];
     this.removedMarkers = [];
@@ -49,7 +50,9 @@ class RouteCreatorMap extends React.Component {
     this.state = {
       distance: 0,
       duration: 0,
-      searchInput: ""
+      workoutType: "bike",
+      searchInput: "",
+
     };
 
   }
@@ -76,6 +79,25 @@ class RouteCreatorMap extends React.Component {
     return e => this.setState({
       [field]: e.currentTarget.value
     });
+  }
+
+
+  handleWorkoutTypeToggle(workoutType) {
+    console.log(workoutType);
+    console.log(this.state.workoutType);
+    this.setState({workoutType: workoutType});
+    this.calculateAndDisplayRoute(this.DirectionsService, this.directionsDisplay);
+    let rideButton = document.getElementById('ride-button');
+    let runButton = document.getElementById('run-button');
+    if (workoutType === 'bike') {
+      rideButton.classList.add("active");
+      runButton.classList.remove("active");
+    }
+    if (workoutType === 'run') {
+      rideButton.classList.remove("active");
+      runButton.classList.add("active");
+    }
+    console.log(this.state.workoutType);
   }
 
   handleSearch(e) {
@@ -125,16 +147,27 @@ class RouteCreatorMap extends React.Component {
       // path.push({lat: location.lat(), lng: location.lng()});
     });
 
+    let mode;
+    if (this.state.workoutType === "bike") {
+      mode = 'BICYCLING';
+    }
+    if (this.state.workoutType === "run") {
+      mode = 'WALKING';
+    }
     this.directionsService.route({
 
       origin: {lat: positions[0].location.lat, lng: positions[0].location.lng},
       destination: {lat: positions[positions.length - 1].location.lat, lng: positions[positions.length -1].location.lng},
       waypoints: positions.slice(1, positions.length - 1),
       optimizeWaypoints: true,
-      travelMode: 'BICYCLING',
+      travelMode: mode,
     }, (response, status) => {
       directionsDisplay.setDirections(response);
       let route = response.routes[0];
+      this.setState({
+        distance: 0,
+        duration: 0
+      });
       for (let i = 0; i < response.routes[0].legs.length; i++) {
         this.setState({
           distance: this.state.distance + parseFloat(response.routes[0].legs[i].distance.value),
@@ -164,6 +197,10 @@ class RouteCreatorMap extends React.Component {
       lastMarker.setMap(null);
       this.removedMarkers.push(lastMarker);
       this.directionsDisplay.set('directions', null);
+      this.setState({
+        distance: 0,
+        duration: 0
+      });
       this.calculateAndDisplayRoute(this.directionsService, this.directionsDisplay);
     }
 
@@ -172,14 +209,23 @@ class RouteCreatorMap extends React.Component {
         this.removedMarkers.pop();
         let nextMarker = this.removedMarkers[this.removedMarkers.length - 1];
         console.log(nextMarker);
-        while (nextMarker !== null && this.removedMarkers.length > 0) {
-          nextMarker = this.removedMarkers.pop();
-          this.markers.push(nextMarker);
-          nextMarker.setMap(this.map);
+        while (nextMarker !== null && this.removedMarkers.length > 1) {
           nextMarker = this.removedMarkers[this.removedMarkers.length - 1];
+          this.markers.push(nextMarker);
+          this.removedMarkers.pop();
+          nextMarker = this.removedMarkers[this.removedMarkers.length - 1];
+          if (this.removedMarkers.length === 1 && nextMarker === null) {
+            this.removedMarkers = [];
+          }
         }
       }
-      // this.directionsDisplay.set('directions', null);
+      this.setState({
+        distance: 0,
+        duration: 0
+      });
+      this.markers.forEach(marker => {
+        marker.setMap(this.map);
+      });
       this.calculateAndDisplayRoute(this.directionsService, this.directionsDisplay);
     }
 
@@ -206,8 +252,13 @@ class RouteCreatorMap extends React.Component {
       console.log(this.markers);
       this.markers = [];
       this.removedMarkers.push(null);
+      this.removedMarkers = this.removedMarkers.reverse();
       this.directionsDisplay.set('directions', null);
-    }
+      this.setState({
+        distance: 0,
+        duration: 0
+      });
+     }
   }
   // first version of clearMarkers
   //
@@ -281,10 +332,12 @@ class RouteCreatorMap extends React.Component {
             onClick={this.clearMarkers}>
             <div className="button-label">Clear</div>
           </div>
-          <div className="button" title="Ride">
+          <div className="button active" title="Ride" id="ride-button"
+            onClick={() => this.handleWorkoutTypeToggle('bike')}>
             <div className="button-label">Ride</div>
           </div>
-          <div className="button" title="Run">
+          <div className="button" title="Run" id="run-button"
+            onClick={() => this.handleWorkoutTypeToggle('run')}>
             <div className="button-label">Run</div>
           </div>
           <div className="float-right">

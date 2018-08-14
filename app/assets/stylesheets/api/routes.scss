@@ -80,6 +80,10 @@
   position: relative;
 }
 
+.active {
+  background-color: grey;
+}
+
 .bottom-panel {
   position: absolute;
   bottom: 30px;
