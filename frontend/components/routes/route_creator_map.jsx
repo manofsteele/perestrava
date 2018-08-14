@@ -36,16 +36,20 @@ class RouteCreatorMap extends React.Component {
     this.placeMarkerAndPanTo = this.placeMarkerAndPanTo.bind(this);
     this.calculateAndDisplayRoute = this.calculateAndDisplayRoute.bind(this);
     this.clearMarkers = this.clearMarkers.bind(this);
-    this.undoMarker = this.undoMarker.bind(this);
+    this.undo = this.undo.bind(this);
+    this.redo = this.redo.bind(this);
     this.plotElevation = this.plotElevation.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
 
     this.markers = [];
-    this.locations = [];
-    this.lastMarker = null;
+    this.removedMarkers = [];
+    // this.locations = [];
+    // this.lastMarker = null;
     this.path = {}; // this is for calculating elevations
     this.state = {
       distance: 0,
       duration: 0,
+      searchInput: ""
     };
 
   }
@@ -58,8 +62,6 @@ class RouteCreatorMap extends React.Component {
     this.map.addListener('click', (e) => {
       this.placeMarkerAndPanTo(e.latLng, map);
     });
-    this.labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    this.labelIndex = 0;
     this.directionsService = new google.maps.DirectionsService();
     this.directionsDisplay = new google.maps.DirectionsRenderer();
     this.elevator = new google.maps.ElevationService;
@@ -70,18 +72,33 @@ class RouteCreatorMap extends React.Component {
 
   }
 
+  update(field) {
+    return e => this.setState({
+      [field]: e.currentTarget.value
+    });
+  }
 
+  handleSearch(e) {
+    e.preventDefault();
+    let address = this.state.searchInput;
+    this.geocoder.geocode( {'address': address}, (results, status) => {
+      if (status === 'OK') {
+        this.map.setCenter(results[0].geometry.location);
+        this.map.setZoom(13);
+      }  else {
+      alert('Geocode was not successful for the following reason: ' + status);
+      }
+    });
+  }
 
   placeMarkerAndPanTo(latLng, map) {
     let marker = new google.maps.Marker({
       position: latLng,
       animation: google.maps.Animation.DROP,
-      label: this.labels[this.labelIndex++ % this.labels.length],
     });
     let markerPos = marker.getPosition().lat();
 
     this.map.panTo(latLng);
-    this.locations.push(latLng);
     marker.setMap(this.map);
     this.markers.push(marker);
     if (this.markers.length > 1) {
@@ -94,13 +111,20 @@ class RouteCreatorMap extends React.Component {
 // modified heavily, 13 Aug. 2018
 
   calculateAndDisplayRoute(directionsService, directionsDisplay) {
+    if (this.markers.length < 2) {
+      return;
+    }
 
     let positions = [];
     let path = [];
-    this.locations.forEach(location => {
-      positions.push({location: {lat: location.lat(), lng: location.lng()}});
-      path.push({lat: location.lat(), lng: location.lng()});
+    this.markers.forEach(marker => {
+      let location = { location: { lat: marker.position.lat(), lng: marker.position.lng() } };
+      positions.push(location);
+      path.push(location);
+      // positions.push({location: {lat: location.lat(), lng: location.lng()}});
+      // path.push({lat: location.lat(), lng: location.lng()});
     });
+
     this.directionsService.route({
 
       origin: {lat: positions[0].location.lat, lng: positions[0].location.lng},
@@ -124,61 +148,110 @@ class RouteCreatorMap extends React.Component {
     }, this.plotElevation);
   }
 
-// below is from Google Maps API page,
-// https://developers.google.com/maps/documentation/javascript/examples/elevation-paths
+  // first version of undoMarker
 
-  plotElevation(elevations, status) {
-    debugger;
-          var chartDiv = document.getElementById('elevation_chart');
-          if (status !== 'OK') {
-            // Show the error code inside the chartDiv.
-            chartDiv.innerHTML = 'Cannot show elevation: request failed because ' +
-                status;
-            return;
-          }
-          // Create a new chart in the elevation_chart DIV.
-          let chart = new google.visualization.ColumnChart(chartDiv);
-
-          // Extract the data from which to populate the chart.
-          // Because the samples are equidistant, the 'Sample'
-          // column here does double duty as distance along the
-          // X axis.
-          let data = new google.visualization.DataTable();
-          data.addColumn('string', 'Sample');
-          data.addColumn('number', 'Elevation');
-          for (var i = 0; i < elevations.length; i++) {
-            data.addRow(['', elevations[i].elevation]);
-          }
-
-          // Draw the chart using the data within its DIV.
-          chart.draw(data, {
-            height: 150,
-            legend: 'none',
-            titleY: 'Elevation (m)'
-          });
-        }
-
-
-  // searchAddressAndRecenterMap() {
-  //   this.geocoder...
+  // undoMarker() {
+  //   this.lastMarker = this.markers.pop();
+  //   this.lastMarker.setMap(null);
+  //   this.locations.pop();
+  //   this.calculateAndDisplayRoute(this.directionsService, this.directionsDisplay);
+  //   this.labelIndex -= 1;
   // }
 
-  undoMarker() {
-    this.lastMarker = this.markers.pop();
-    this.lastMarker.setMap(null);
-    this.locations.pop();
-    this.calculateAndDisplayRoute(this.directionsService, this.directionsDisplay);
-    this.labelIndex -= 1;
+  undo() {
+    if (this.markers.length > 0) {
+      let lastMarker = this.markers.pop();
+      lastMarker.setMap(null);
+      this.removedMarkers.push(lastMarker);
+      this.directionsDisplay.set('directions', null);
+      this.calculateAndDisplayRoute(this.directionsService, this.directionsDisplay);
+    }
+
+    if ( this.markers.length === 0 && this.removedMarkers.length > 0) {
+      if (this.removedMarkers[this.removedMarkers.length - 1] === null) {
+        this.removedMarkers.pop();
+        let nextMarker = this.removedMarkers[this.removedMarkers.length - 1];
+        console.log(nextMarker);
+        while (nextMarker !== null && this.removedMarkers.length > 0) {
+          nextMarker = this.removedMarkers.pop();
+          this.markers.push(nextMarker);
+          nextMarker.setMap(this.map);
+          nextMarker = this.removedMarkers[this.removedMarkers.length - 1];
+        }
+      }
+      // this.directionsDisplay.set('directions', null);
+      this.calculateAndDisplayRoute(this.directionsService, this.directionsDisplay);
+    }
+
+  }
+
+  redo() {
+    if (this.removedMarkers.length > 0 && this.removedMarkers[this.removedMarkers.length - 1] !== null) {
+      let nextMarker = this.removedMarkers.pop();
+      nextMarker.setMap(this.map);
+      this.markers.push(nextMarker);
+      this.directionsDisplay.set('directions', null);
+      this.calculateAndDisplayRoute(this.directionsService, this.directionsDisplay);
+    }
   }
 
   clearMarkers() {
-    this.markers.forEach(marker => {
-      marker.setMap(null);
-    });
-    this.markers = [];
-    this.locations = [];
-    this.directionsDisplay.set('directions', null);
+    console.log(this.markers);
+    if (this.markers.length > 0) {
+      this.removedMarkers.push(null);
+      this.markers.forEach(marker => {
+        marker.setMap(null);
+        this.removedMarkers.push(marker);
+      });
+      console.log(this.markers);
+      this.markers = [];
+      this.removedMarkers.push(null);
+      this.directionsDisplay.set('directions', null);
+    }
   }
+  // first version of clearMarkers
+  //
+  // clearMarkers() {
+  //   this.markers.forEach(marker => {
+  //     marker.setMap(null);
+  //   });
+  //   this.markers = [];
+  //   this.locations = [];
+  //   this.directionsDisplay.set('directions', null);
+  // }
+
+  // below is from Google Maps API page,
+  // https://developers.google.com/maps/documentation/javascript/examples/elevation-paths
+
+    plotElevation(elevations, status) {
+            var chartDiv = document.getElementById('elevation_chart');
+            if (status !== 'OK') {
+              // Show the error code inside the chartDiv.
+              chartDiv.innerHTML = 'Cannot show elevation: request failed because ' +
+                  status;
+              return;
+            }
+            // Create a new chart in the elevation_chart DIV.
+            let chart = new google.visualization.ColumnChart(chartDiv);
+
+            // Extract the data from which to populate the chart.
+            // Because the samples are equidistant, the 'Sample'
+            // column here does double duty as distance along the
+            // X axis.
+            let data = new google.visualization.DataTable();
+            data.addColumn('string', 'Sample');
+            data.addColumn('number', 'Elevation');
+            for (var i = 0; i < elevations.length; i++) {
+              data.addRow(['', elevations[i].elevation]);
+            }
+
+            // Draw the chart using the data within its DIV.
+            chart.draw(data, {
+              height: 150,
+              legend: 'none',
+              titleY: 'Elevation (m)'
+            });
+          }
 
 
 
@@ -186,17 +259,22 @@ class RouteCreatorMap extends React.Component {
     return (
       <div className="map-container">
         <div className="map-tool-bar">
+          <form onSubmit={this.handleSearch} >
           <input className="location-search"
             placeholder="Enter a location"
-            type="text" ></input>
+            type="text"
+            value={this.state.searchInput}
+            onChange={this.update('searchInput')}></input>
           <div className= "search-button" title="Search">
             <div className="search-icon"></div>
           </div>
+        </form>
           <div className="button" title="Undo last marker"
-            onClick={this.undoMarker}>
+            onClick={this.undo}>
             <div className="button-label">Undo</div>
           </div>
-          <div className="button" title="Redo last marker">
+          <div className="button" title="Redo last marker"
+            onClick={this.redo}>
             <div className="button-label">Redo</div>
           </div>
           <div className="button" title="Clear all markers"
