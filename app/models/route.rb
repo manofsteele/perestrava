@@ -25,7 +25,7 @@ class Route < ApplicationRecord
     :routeType,
     :user_id,
     :duration,
-    :marker_string
+    :marker_string,
   presence: true
 
   has_many :workouts

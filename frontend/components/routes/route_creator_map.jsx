@@ -62,6 +62,7 @@ class RouteCreatorMap extends React.Component {
       routeType: "bike",
       elevationGain: 0,
       searchInput: "",
+      markerString: ""
     };
 
   }
@@ -154,7 +155,8 @@ class RouteCreatorMap extends React.Component {
       polyline: this.state.polyline,
       elevation_gain: this.state.elevationGain,
       routeType: this.state.routeType,
-      duration: this.state.duration
+      duration: this.state.duration,
+      marker_string: this.state.markerString,
     };
     this.props.createRoute(route).then( () => this.props.history.push("/routes/index"));
   }
@@ -213,6 +215,7 @@ class RouteCreatorMap extends React.Component {
       positions.push(location);
 
       path.push({lat: marker.position.lat(), lng: marker.position.lng()});
+
       if (this.markers.length === 1) {
         path.push({lat: marker.position.lat(), lng: marker.position.lng()});
         directionsDisplay.setOptions({ preserveViewport: true });
@@ -221,6 +224,11 @@ class RouteCreatorMap extends React.Component {
       }
 
     });
+
+    let origin = {lat: positions[0].location.lat, lng: positions[0].location.lng};
+    let destination = {lat: positions[positions.length - 1].location.lat, lng: positions[positions.length -1].location.lng};
+
+    this.state.markerString = [origin.lat, origin.lng, destination.lat, destination.lng].join(",");
 
     let mode;
     if (this.state.routeType === "bike") {

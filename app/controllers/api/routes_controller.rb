@@ -20,7 +20,15 @@ class Api::RoutesController < ApplicationController
   end
 
   def route_params
-    params.require(:route).permit(:name, :description, :length, :polyline, :elevation_gain, :routeType, :user_id, :duration)
+    params.require(:route).permit(:name,
+       :description,
+       :length,
+       :polyline,
+       :elevation_gain, 
+       :routeType,
+       :user_id,
+       :duration,
+       :marker_string)
   end
 
 end
