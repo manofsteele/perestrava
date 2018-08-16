@@ -7,4 +7,5 @@ json.extract! route,
   :elevation_gain,
   :routeType,
   :duration,
-  :marker_string
+  :marker_string,
+  :created_at

@@ -2,3 +2,88 @@
   width: 300px;
   height: 200px;
 }
+
+.route-index-list {
+  display: flex;
+}
+
+.index-header {
+  margin-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 40px;
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+}
+
+.index-headline {
+  color: #2d2d32;
+  font-family: 'Russo', sans-serif;
+  font-size: 30px;
+  font-weight: 300;
+  margin-left: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.index-create-button {
+  font-family: 'Russo', sans-serif;
+  position: relative;
+  right: 0;
+  background-color: #0013E5;
+  color: white;
+  font-size: 14px;
+  padding: 10px 16px;
+  border-radius: 2px;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+.route-detail-tile {
+  width: 300px;
+  height: 350px;
+  margin: 20px;
+}
+
+.route-detail-stats {
+  font-family: 'Russo', sans-serif;
+  background-color: #f7f7f7;
+  height: 150px;
+  padding: 15px;
+}
+
+
+.route-detail-name {
+  margin-top: 15px;
+  color: #007FB6;
+  font-size: 18px;
+  font-weight: 300;
+  margin-bottom: 30px;
+}
+
+.route-detail-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 5px;
+}
+.route-detail-label {
+  color: #99999e;
+  font-size: 12px;
+}
+
+.route-detail-data-big {
+  font-size: 16px;
+  color: #2d2d32;
+  font-weight: 300;
+}
+
+.route-detail-data-small {
+  font-size: 16px;
+  color: #2d2d32;
+  font-weight: 300;
+}
+
+.grey-bar {
+  margin-top: 50px;
+  height: 50px;
+}
