@@ -8,6 +8,7 @@ import LoginFormContainer from './session_form/login_form_container';
 import NavbarContainer from './navbar/navbar_container';
 import RouteCreatorContainer from './routes/route_creator_container';
 import RouteIndexContainer from './routes/route_index_container';
+import Footer from './footer/footer';
 import NotFound from './not_found';
 import Splash from './splash';
 
@@ -28,6 +29,9 @@ const App = () => (
       <Redirect to="/not_found" />
       // <Route path="*" component={NotFound} />
     </Switch>
+    <footer>
+      <Footer />
+    </footer>
   </div>
 );
 

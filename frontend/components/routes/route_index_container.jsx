@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
 import { fetchRoutes } from '../../actions/route_actions';
-import RouteIndex from './route_creator_map';
+import RouteIndex from './route_index';
 
 const mapStateToProps = (state = {}, ownProps) => {
   return {
     currentUser: state.session.currentUser,
+    routes: Object.values(state.entities.routes)
   };
 };
 

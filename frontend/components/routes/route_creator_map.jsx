@@ -92,7 +92,7 @@ class RouteCreatorMap extends React.Component {
 
 
   handleWorkoutTypeToggle(routeType) {
-    this.setState({routeType: routeType});
+    this.setState({routeType: routeType}, () => this.calculateAndDisplayRoute(this.DirectionsService, this.directionsDisplay));
     let rideButton = document.getElementById('ride-button');
     let runButton = document.getElementById('run-button');
     if (routeType === 'bike') {
@@ -107,7 +107,7 @@ class RouteCreatorMap extends React.Component {
         runButton.classList.add("active");
       }
     }
-    this.calculateAndDisplayRoute(this.DirectionsService, this.directionsDisplay);
+    // this.calculateAndDisplayRoute(this.DirectionsService, this.directionsDisplay);
   }
 
   toggleElevationPane(showState) {
@@ -154,8 +154,9 @@ class RouteCreatorMap extends React.Component {
       polyline: this.state.polyline,
       elevation_gain: this.state.elevationGain,
       routeType: this.state.routeType,
+      duration: this.state.duration
     };
-    this.props.createRoute(route);
+    this.props.createRoute(route).then( () => this.props.history.push("/routes/index"));
   }
 
   handleSearch(e) {

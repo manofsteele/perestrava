@@ -1,0 +1,23 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  border-top: 1px solid grey;
+  i {
+    float: right;
+    font-size: 30px;
+    line-height: 5px;
+    margin-right: 10px;
+    margin-top: 15px;
+  }
+}
+
+.logo-footer {
+  font-family: 'Russo One', sans-serif;
+  color: #99999e;
+  font-size: 30px;
+  text-transform: uppercase;
+  padding-left: 20px;
+}

@@ -8,7 +8,7 @@ class Api::RoutesController < ApplicationController
     @route = Route.new(route_params)
     @route.user_id = current_user.id
     if @route.save
-      render "api/routes/index"
+      render "api/routes/show"
     else
       render json: @route.errors.full_messages, status: 422
     end
@@ -20,7 +20,7 @@ class Api::RoutesController < ApplicationController
   end
 
   def route_params
-    params.require(:route).permit(:name, :description, :length, :polyline, :elevation_gain, :routeType, :user_id)
+    params.require(:route).permit(:name, :description, :length, :polyline, :elevation_gain, :routeType, :user_id, :duration)
   end
 
 end

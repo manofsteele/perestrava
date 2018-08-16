@@ -12,10 +12,21 @@
 #  user_id        :integer          not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
+#  duration       :float            not null
+#  marker_string  :string           not null
 #
 
 class Route < ApplicationRecord
-  validates :name, :description, :length, :polyline, :elevation_gain, :routeType, :user_id, presence: true
+  validates :name,
+    :description,
+    :length,
+    :polyline,
+    :elevation_gain,
+    :routeType,
+    :user_id,
+    :duration,
+    :marker_string
+  presence: true
 
   has_many :workouts
   belongs_to :user
