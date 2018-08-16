@@ -7,6 +7,7 @@ import SignupFormContainer from './session_form/signup_form_container';
 import LoginFormContainer from './session_form/login_form_container';
 import NavbarContainer from './navbar/navbar_container';
 import RouteCreatorContainer from './routes/route_creator_container';
+import RouteIndexContainer from './routes/route_index_container';
 import NotFound from './not_found';
 import Splash from './splash';
 
@@ -21,6 +22,7 @@ const App = () => (
       <AuthRoute exact path="/login" component={LoginFormContainer} />
       <AuthRoute exact path="/signup" component={SignupFormContainer} />
       <ProtectedRoute exact path="/routes/new" component={RouteCreatorContainer} />
+      <ProtectedRoute exact path="/routes/index" component={RouteIndexContainer} />
       <Route exact path="/" component={Splash} />
       <Route exact path="/not_found" component={NotFound} />
       <Redirect to="/not_found" />

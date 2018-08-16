@@ -41,17 +41,27 @@ class RouteCreatorMap extends React.Component {
     this.plotElevation = this.plotElevation.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.handleWorkoutTypeToggle = this.handleWorkoutTypeToggle.bind(this);
+    this.toggleElevationPane = this.toggleElevationPane.bind(this);
+    this.saveButtonOpenModal = this.saveButtonOpenModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.handleSave = this.handleSave.bind(this);
+    this.formatDistance = this.formatDistance.bind(this);
+    this.formatElevation = this.formatElevation.bind(this);
+    this.formatTime = this.formatTime.bind(this);
 
     this.markers = [];
     this.removedMarkers = [];
 
-    this.path = {}; // this is for calculating elevations
+    this.path = []; // this is for calculating elevations
     this.state = {
-      distance: 0,
+      name: "",
+      description: "",
+      length: 0,
+      polyline: "",
       duration: 0,
-      workoutType: "bike",
+      routeType: "bike",
+      elevationGain: 0,
       searchInput: "",
-
     };
 
   }
@@ -81,22 +91,71 @@ class RouteCreatorMap extends React.Component {
   }
 
 
-  handleWorkoutTypeToggle(workoutType) {
-    console.log(workoutType);
-    console.log(this.state.workoutType);
-    this.setState({workoutType: workoutType});
-    this.calculateAndDisplayRoute(this.DirectionsService, this.directionsDisplay);
+  handleWorkoutTypeToggle(routeType) {
+    this.setState({routeType: routeType});
     let rideButton = document.getElementById('ride-button');
     let runButton = document.getElementById('run-button');
-    if (workoutType === 'bike') {
-      rideButton.classList.add("active");
-      runButton.classList.remove("active");
+    if (routeType === 'bike') {
+      if (!rideButton.classList.contains("active")) {
+        rideButton.classList.add("active");
+        runButton.classList.remove("active");
+      }
     }
-    if (workoutType === 'run') {
-      rideButton.classList.remove("active");
-      runButton.classList.add("active");
+    if (routeType === 'run') {
+      if (!runButton.classList.contains("active")) {
+        rideButton.classList.remove("active");
+        runButton.classList.add("active");
+      }
     }
-    console.log(this.state.workoutType);
+    this.calculateAndDisplayRoute(this.DirectionsService, this.directionsDisplay);
+  }
+
+  toggleElevationPane(showState) {
+    let elevationPane = document.getElementById('elevation-chart');
+    let showElevation = document.getElementById('show-elevation');
+    let hideElevation = document.getElementById('hide-elevation');
+    if (showState === 'show') {
+      showElevation.classList.add("hidden");
+      elevationPane.classList.remove("hidden");
+      hideElevation.classList.remove("hidden");
+      this.calculateAndDisplayRoute(this.DirectionsService, this.directionsDisplay);
+    }
+    if (showState === 'hide') {
+      showElevation.classList.remove("hidden");
+      elevationPane.classList.add("hidden");
+      hideElevation.classList.add("hidden");
+    }
+  }
+
+  saveButtonOpenModal() {
+    if (this.markers.length < 2) {
+      return;
+    }
+    let modal = document.getElementById('formModal');
+    modal.style.display = "block";
+    window.onclick = (event) => {
+      if (event.target === modal) {
+          modal.style.display = "none";
+      }
+    };
+  }
+
+  closeModal() {
+    let modal = document.getElementById('formModal');
+    modal.style.display = "none";
+  }
+
+  handleSave(e) {
+    e.preventDefault();
+    let route = {
+      name: this.state.name,
+      description: this.state.description,
+      length: this.state.length,
+      polyline: this.state.polyline,
+      elevation_gain: this.state.elevationGain,
+      routeType: this.state.routeType,
+    };
+    this.props.createRoute(route);
   }
 
   handleSearch(e) {
@@ -132,8 +191,18 @@ class RouteCreatorMap extends React.Component {
 // modified heavily, 13 Aug. 2018
 
   calculateAndDisplayRoute(directionsService, directionsDisplay) {
-    if (this.markers.length < 2) {
+    if (this.markers.length < 1) {
       return;
+    }
+    let saveButton = document.getElementById('saveButton');
+    if (this.markers.length >= 2) {
+      if (saveButton.classList.contains('disabled')) {
+        saveButton.classList.remove('disabled');
+      }
+    } else {
+      if (!saveButton.classList.contains('disabled') ) {
+        saveButton.classList.add('disabled');
+      }
     }
 
     let positions = [];
@@ -141,16 +210,22 @@ class RouteCreatorMap extends React.Component {
     this.markers.forEach(marker => {
       let location = { location: { lat: marker.position.lat(), lng: marker.position.lng() } };
       positions.push(location);
+
       path.push({lat: marker.position.lat(), lng: marker.position.lng()});
-      // positions.push({location: {lat: location.lat(), lng: location.lng()}});
-      // path.push({lat: location.lat(), lng: location.lng()});
+      if (this.markers.length === 1) {
+        path.push({lat: marker.position.lat(), lng: marker.position.lng()});
+        directionsDisplay.setOptions({ preserveViewport: true });
+      } else {
+        directionsDisplay.setOptions({ preserveViewport: false});
+      }
+
     });
 
     let mode;
-    if (this.state.workoutType === "bike") {
+    if (this.state.routeType === "bike") {
       mode = 'BICYCLING';
     }
-    if (this.state.workoutType === "run") {
+    if (this.state.routeType === "run") {
       mode = 'WALKING';
     }
     this.directionsService.route({
@@ -158,18 +233,19 @@ class RouteCreatorMap extends React.Component {
       origin: {lat: positions[0].location.lat, lng: positions[0].location.lng},
       destination: {lat: positions[positions.length - 1].location.lat, lng: positions[positions.length -1].location.lng},
       waypoints: positions.slice(1, positions.length - 1),
-      optimizeWaypoints: true,
+      optimizeWaypoints: false,
       travelMode: mode,
     }, (response, status) => {
       directionsDisplay.setDirections(response);
       let route = response.routes[0];
       this.setState({
-        distance: 0,
-        duration: 0
+        length: 0,
+        duration: 0,
+        polyline: route.overview_polyline,
       });
       for (let i = 0; i < response.routes[0].legs.length; i++) {
         this.setState({
-          distance: this.state.distance + parseFloat(response.routes[0].legs[i].distance.value),
+          length: this.state.length + parseFloat(response.routes[0].legs[i].distance.value),
           duration: this.state.duration + parseFloat(response.routes[0].legs[i].duration.value)
         });
       }
@@ -187,7 +263,7 @@ class RouteCreatorMap extends React.Component {
       this.removedMarkers.push(lastMarker);
       this.directionsDisplay.set('directions', null);
       this.setState({
-        distance: 0,
+        length: 0,
         duration: 0
       });
       this.calculateAndDisplayRoute(this.directionsService, this.directionsDisplay);
@@ -197,7 +273,6 @@ class RouteCreatorMap extends React.Component {
       if (this.removedMarkers[this.removedMarkers.length - 1] === null) {
         this.removedMarkers.pop();
         let nextMarker = this.removedMarkers[this.removedMarkers.length - 1];
-        console.log(nextMarker);
         while (nextMarker !== null && this.removedMarkers.length > 1) {
           nextMarker = this.removedMarkers[this.removedMarkers.length - 1];
           this.markers.push(nextMarker);
@@ -209,7 +284,7 @@ class RouteCreatorMap extends React.Component {
         }
       }
       this.setState({
-        distance: 0,
+        length: 0,
         duration: 0
       });
       this.markers.forEach(marker => {
@@ -231,57 +306,112 @@ class RouteCreatorMap extends React.Component {
   }
 
   clearMarkers() {
-    console.log(this.markers);
     if (this.markers.length > 0) {
       this.removedMarkers.push(null);
       this.markers.forEach(marker => {
         marker.setMap(null);
         this.removedMarkers.push(marker);
       });
-      console.log(this.markers);
       this.markers = [];
       this.removedMarkers.push(null);
       this.removedMarkers = this.removedMarkers.reverse();
       this.directionsDisplay.set('directions', null);
       this.setState({
-        distance: 0,
+        length: 0,
         duration: 0
       });
      }
   }
 
+  formatDistance() {
+    let feet = this.state.length * 3.2808399;
+    let miles = feet / 5280;
+    return (miles.toFixed(2) + " miles");
+  }
+
+  formatElevation() {
+    let feet = this.state.elevationGain * 3.2808399;
+    return (feet.toFixed(0) + " feet");
+  }
+
+  formatTime() {
+    let minutes = (this.state.duration / 60).toFixed(0);
+    let hours = Math.floor(minutes / 60);
+    if (hours < 1) {
+      if (minutes < 10) {
+        return ("0:0" + minutes);
+      } else {
+      return ("0:" + minutes);
+      }
+    } else {
+      minutes = (minutes % 60).toFixed(0);
+      if (minutes < 10) {
+        return (hours + ":0" + minutes);
+      } else {
+        return (hours + ":" + minutes);
+      }
+    }
+  }
   // below is from Google Maps API page,
   // https://developers.google.com/maps/documentation/javascript/examples/elevation-paths
 
-    plotElevation(elevations, status) {
-            var chartDiv = document.getElementById('elevation_chart');
-            if (status !== 'OK') {
-              // Show the error code inside the chartDiv.
-              chartDiv.innerHTML = 'Cannot show elevation: request failed because ' +
-                  status;
-              return;
-            }
-            // Create a new chart in the elevation_chart DIV.
-            let chart = new google.visualization.ColumnChart(chartDiv);
+  plotElevation(elevations, status) {
+    var chartDiv = document.getElementById('elevation-chart');
+    if (status !== 'OK') {
+      // Show the error code inside the chartDiv.
+      chartDiv.innerHTML = 'Cannot show elevation: request failed because ' +
+          status;
+      return;
+    }
+    // Create a new chart in the elevation_chart DIV.
+    let chart = new google.visualization.ColumnChart(chartDiv);
 
-            // Extract the data from which to populate the chart.
-            // Because the samples are equidistant, the 'Sample'
-            // column here does double duty as distance along the
-            // X axis.
-            let data = new google.visualization.DataTable();
-            data.addColumn('string', 'Sample');
-            data.addColumn('number', 'Elevation');
-            for (var i = 0; i < elevations.length; i++) {
-              data.addRow(['', elevations[i].elevation]);
-            }
+    // Extract the data from which to populate the chart.
+    // Because the samples are equidistant, the 'Sample'
+    // column here does double duty as length along the
+    // X axis.
+    let data = new google.visualization.DataTable();
+    data.addColumn('string', 'Sample');
+    data.addColumn('number', 'Elevation');
+    for (let i = 0; i < elevations.length; i++) {
+      data.addRow(['', elevations[i].elevation]);
+    }
 
-            // Draw the chart using the data within its DIV.
-            chart.draw(data, {
-              height: 150,
-              legend: 'none',
-              titleY: 'Elevation (m)'
-            });
-          }
+    let gain = 0;
+    let change = 0;
+    if (this.markers.length <= 1) {
+      this.setState({elevationGain: 0});
+      data = new google.visualization.DataTable();
+      data.addColumn('string', 'Sample');
+      data.addColumn('number', 'Elevation');
+      for (let i = 0; i < elevations.length; i++) {
+        data.addRow(['', 0]);
+      }
+      chart.draw(data, {
+        height: 120,
+        legend: 'none',
+        titleY: 'Elevation (m)',
+        vAxis: {maxValue: 100}
+      });
+
+    } else {
+      for (let i = 0; i < elevations.length - 1; i++) {
+        change = elevations[i + 1].elevation - elevations[i].elevation;
+        if (change > 0) {
+          gain += change;
+        }
+      }
+      this.setState({elevationGain: gain});
+
+      // Draw the chart using the data within its DIV.
+      chart.draw(data, {
+        height: 150,
+        legend: 'none',
+        titleY: 'Elevation (m)',
+      });
+    }
+
+  }
 
 
 
@@ -300,27 +430,28 @@ class RouteCreatorMap extends React.Component {
           </div>
         </form>
           <div className="button" title="Undo last marker"
-            onClick={this.undo}>
+            onClick={this.undo}><i className="fas fa-undo"></i>
             <div className="button-label">Undo</div>
           </div>
           <div className="button" title="Redo last marker"
-            onClick={this.redo}>
+            onClick={this.redo}><i className="fas fa-redo"></i>
             <div className="button-label">Redo</div>
           </div>
           <div className="button" title="Clear all markers"
-            onClick={this.clearMarkers}>
+            onClick={this.clearMarkers}><i className="fas fa-times"></i>
             <div className="button-label">Clear</div>
           </div>
           <div className="button active" title="Ride" id="ride-button"
-            onClick={() => this.handleWorkoutTypeToggle('bike')}>
+            onClick={() => this.handleWorkoutTypeToggle('bike')}><i className="fas fa-bicycle"></i>
             <div className="button-label">Ride</div>
           </div>
           <div className="button" title="Run" id="run-button"
-            onClick={() => this.handleWorkoutTypeToggle('run')}>
+            onClick={() => this.handleWorkoutTypeToggle('run')}><i className="fas fa-walking"></i>
             <div className="button-label">Run</div>
           </div>
           <div className="float-right">
-            <div className="button-save" title="Save">
+            <div className="button-save disabled" title="Save" id="saveButton"
+              onClick={ () => this.saveButtonOpenModal()}>
               <div className="button-save-label">Save</div>
             </div>
           </div>
@@ -338,28 +469,60 @@ class RouteCreatorMap extends React.Component {
                  <div className="button-label" >Route Type</div>
               </li>
               <li>
-                 <strong id="">{this.state.distance}</strong>
+                 <strong id="">{this.formatDistance()}</strong>
                  <div className="button-label" >Distance</div>
               </li>
               <li>
-                 <strong id=""></strong>
+                 <strong id="">{this.formatElevation()}</strong>
                  <div className="button-label" >Elevation Gain</div>
               </li>
               <li>
-                 <strong id="">{this.state.duration / 60}</strong>
+                 <strong id="">{this.formatTime()}</strong>
                  <div className="button-label" >Estimated Moving Time</div>
               </li>
-              <li id="show-elevation">
+              <li className="button-label" id="show-elevation"
+                onClick={() => this.toggleElevationPane('show')}>
                  <strong id=""> </strong>
-                 <div className="button-label" >Show Elevation</div>
+                 <div >Show Elevation</div>
               </li>
-              <li className="hidden" id="hide-elevation">
+              <li className="button-label hidden" id="hide-elevation"
+                onClick={() => this.toggleElevationPane('hide')}>
                  <strong id=""> </strong>
-                 <div className="button-label" >Hide Elevation</div>
-              </li>            </ul>
+                 <div >Hide Elevation</div>
+              </li>
+            </ul>
           </div>
-          <div className="elevation-chart" id="elevation_chart">
+          <div className="elevation-chart hidden" id="elevation-chart">
 
+          </div>
+        </div>
+
+        <div id="formModal" className="modal">
+          <div className="modal-content">
+            <header className="modal-header">
+              <h1>Save</h1>
+            </header>
+            <form onSubmit={this.handleSave} className="modal-form" id="formModal">
+              <p>Enter a name and description for your route below. On the next page,
+              you'll be able to see and edit your route.</p>
+            <label>Route Name (required)</label>
+            <input type="text"
+              value={this.state.name}
+              onChange={this.update('name')}
+              className="save-input"
+              />
+            <br/>
+            <label>Description</label>
+            <textarea
+              value={this.state.description}
+              onChange={this.update('description')}
+              className="save-input"
+              />
+            <div className="modal-buttons">
+              <div className="cancel" onClick={() => this.closeModal()}>Cancel</div>
+              <input type="submit" className="modal-submit modal-save" value="Save"/>
+            </div>
+          </form>
           </div>
         </div>
       </div>

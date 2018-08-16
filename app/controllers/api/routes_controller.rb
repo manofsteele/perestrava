@@ -6,7 +6,7 @@ class Api::RoutesController < ApplicationController
 
   def create
     @route = Route.new(route_params)
-    @route.user_id = @user.id
+    @route.user_id = current_user.id
     if @route.save
       render "api/routes/index"
     else
