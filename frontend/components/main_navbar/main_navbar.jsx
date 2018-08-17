@@ -1,15 +1,8 @@
 import React from 'react';
-import { logout } from '../../actions/session_actions';
 
-// function showLeftDropdown(){
-//   document.getElementById("left-dropdown").classList.toggle("hidden");
-//
-// }
-//
-// function showRightDropdown() {
-//   document.getElementById("right-dropdown").classList.toggle("hidden");
-// }
-const MainNavbar = () => (
+const MainNavbar = (props) => {
+  console.log(props);
+  return (
   <div className="main-navbar">
     <div className="dropdown-left">
     <a href="#/" className="logo">Perestrava</a>
@@ -30,9 +23,10 @@ const MainNavbar = () => (
           </li>
         </div>
       </div>
-      <button className="main-nav-logout" onClick={logout}>Log Out</button>
+      <button className="main-nav-logout" onClick={ props.logout }>Log Out</button>
     </div>
   </div>
 );
+};
 
 export default MainNavbar;

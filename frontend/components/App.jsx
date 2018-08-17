@@ -6,7 +6,7 @@ import {Route, Redirect, Switch, Link, HashRouter } from 'react-router-dom';
 import SignupFormContainer from './session_form/signup_form_container';
 import LoginFormContainer from './session_form/login_form_container';
 import NavbarContainer from './navbar/navbar_container';
-import MainNavbar from './main_navbar/main_navbar';
+import MainNavbarContainer from './main_navbar/main_navbar_container';
 import RouteCreatorContainer from './routes/route_creator_container';
 import RouteIndexContainer from './routes/route_index_container';
 import RouteBuilderNavBar from './routes/route_builder_navbar';
@@ -24,7 +24,7 @@ const App = () => (
         <AuthRoute exact path="/login" component={NavbarContainer } />
         <AuthRoute exact path="/signup" component={NavbarContainer } />
         <ProtectedRoute exact path="/routes/new" component={RouteBuilderNavBar} />
-        <ProtectedRoute exact path="/routes/index" component={MainNavbar} />
+        <ProtectedRoute exact path="/routes/index" component={MainNavbarContainer} />
         <Route exact path="/" component={NavbarContainer} />
         <Route exact path="/not_found" component={NavbarContainer} />
       </Switch>
