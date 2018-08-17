@@ -88,7 +88,7 @@ class RouteCreatorMap extends React.Component {
   renderErrors() {
     return(
       <ul>
-        {this.errors.map((error, i) => (
+        {this.props.errors.map((error, i) => (
           <li className="errors" key={`error-${i}`}>
             {error}
           </li>
@@ -149,6 +149,7 @@ class RouteCreatorMap extends React.Component {
     window.onclick = (event) => {
       if (event.target === modal) {
           modal.style.display = "none";
+          this.props.clearRouteErrors();
       }
     };
   }
@@ -156,6 +157,8 @@ class RouteCreatorMap extends React.Component {
   closeModal() {
     let modal = document.getElementById('formModal');
     modal.style.display = "none";
+    console.log(this);
+    this.props.clearRouteErrors();
   }
 
   handleSave(e) {
@@ -536,6 +539,7 @@ class RouteCreatorMap extends React.Component {
             <label>Route Name (required)</label>
             <input type="text"
               value={this.state.name}
+              onClick={() => this.props.clearRouteErrors()}
               onChange={this.update('name')}
               className="save-input"
               />
@@ -543,6 +547,7 @@ class RouteCreatorMap extends React.Component {
             <label>Description</label>
             <textarea
               value={this.state.description}
+              onClick={() => this.props.clearRouteErrors()}
               onChange={this.update('description')}
               className="save-input"
               />

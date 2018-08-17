@@ -39,7 +39,7 @@ class SessionForm extends React.Component {
     this.props.clearErrors();
     this.props.history.push(this.props.otherRoute);
   }
-  
+
   renderErrors() {
     return(
       <ul>

@@ -1,26 +1,48 @@
 .main-navbar {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   margin-top: 10px;
   margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+}
+
+.main-navbar > a {
+  width: 200px;
+  height: 50px;
+  display: block;
+}
+
+.dropdown-container {
+  display: flex;
+  flex-direction: row;
+  height: 60px;
 }
 
 .dropdown-left {
   position: relative;
-  display: inline-block;
+  display: flex;
+}
+
+.dropdown-left-dashboard {
+  position: relative;
+  margin-left: 20px;
+  margin-top: 25px;
+  color: #333;
 }
 
 .dashboard-top {
   font-family: 'Russo', sans-serif;
   padding-left: 20px;
+  font-weight: 500;
+  margin-top: 30px;
+  margin-left: 20px;
 }
 
 .dropdown-right {
   position: relative;
-  display: inline-block;
-  margin-right: 30px;
-  margin-top: 10px;
+  display: block;
+  margin-right: 40px;
+  padding-top: 25px;
   color: #0013E5;
 }
 
@@ -29,22 +51,54 @@
   color: #0013E5;
 }
 
-.dropdown-content > li {
+.dropdown-content-left, .dropdown-content-right > li {
   height: 30px;
   font-size: 14px;
   list-style: none;
   color: #2d2d32;
   font-family: 'Russo', sans-serif;
-  padding: 12px 16px;
+  padding: 12px 12px;
   display: block;
+  border: 1px solid grey;
+  border-top: none;
 }
 
-.dropdown-content {
+.dropdown-content-left {
+  left: 40px;
+  top: 45px;
   display: none;
   position: absolute;
   min-width: 100px;
+  background: white;
+  list-style: none;
+  z-index: 1;
   overflow: visible;
 }
 
-.dropdown-left:hover .dropdown-content {display: block;}
-.dropdown-right:hover .dropdown-content {display: block;}
+.dropdown-content-right {
+  left: -80px;
+  top: 70px;
+  display: none;
+  position: absolute;
+  min-width: 100px;
+  background: white;
+  z-index: 1;
+  overflow: visible;
+}
+
+.dropdown-left-dashboard:hover .dropdown-content-left {display: block;}
+.dropdown-right:hover .dropdown-content-right {display: block;}
+
+.main-nav-logout {
+  font-family: 'Russo', sans-serif;
+  color: #0013E5;
+  border: 1px solid #e6e6eb;
+  padding: 15px 30px;
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+  margin-right: 20px;
+  font-weight: 700;
+  border-radius: 2px;
+  justify-content: center;
+  margin-top: 10px;
+}
