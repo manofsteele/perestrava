@@ -1,0 +1,25 @@
+.route-builder-navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  margin-top: 10px;
+  border-bottom: 1px solid grey;
+}
+
+.route-builder-navbar-left > span {
+  font-family: 'Russo', sans-serif;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 20px;
+  padding-bottom: 10px;
+}
+
+.route-builder-navbar-right {
+  margin-top: 10px;
+  margin-right: 20px;
+  font-family: 'Russo', sans-serif;
+  font-size: 14px;
+  color: #999;
+}

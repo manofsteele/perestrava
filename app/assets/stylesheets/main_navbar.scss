@@ -1,0 +1,50 @@
+.main-navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.dropdown-left {
+  position: relative;
+  display: inline-block;
+}
+
+.dashboard-top {
+  font-family: 'Russo', sans-serif;
+  padding-left: 20px;
+}
+
+.dropdown-right {
+  position: relative;
+  display: inline-block;
+  margin-right: 30px;
+  margin-top: 10px;
+  color: #0013E5;
+}
+
+.dropdown-right > i {
+  font-size: 20px;
+  color: #0013E5;
+}
+
+.dropdown-content > li {
+  height: 30px;
+  font-size: 14px;
+  list-style: none;
+  color: #2d2d32;
+  font-family: 'Russo', sans-serif;
+  padding: 12px 16px;
+  display: block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  min-width: 100px;
+  overflow: visible;
+}
+
+.dropdown-left:hover .dropdown-content {display: block;}
+.dropdown-right:hover .dropdown-content {display: block;}

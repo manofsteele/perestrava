@@ -23,9 +23,10 @@
 
 .search-button {
   margin: 2px;
-  padding: 7px 20px;
+  padding: 10px 20px;
   vertical-align: bottom;
-  font-size: 12px;
+  font-size: 18px;
+  text-align: center;
   width: 24px;
   border: 1px solid #ccccd1;
 }
@@ -201,7 +202,7 @@
 
 .modal-form {
   font-family: 'Russo', sans-serif;
-  height: 300px;
+  height: 350px;
   display: flex;
   flex-direction: column;
   color: #333;
@@ -219,6 +220,11 @@
   width: 300px;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.route-errors {
+  height: 40px;
+  text-shadow: 1px 1px black;
 }
 
 .modal-buttons {

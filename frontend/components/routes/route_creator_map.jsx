@@ -45,10 +45,12 @@ class RouteCreatorMap extends React.Component {
     this.saveButtonOpenModal = this.saveButtonOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.handleSave = this.handleSave.bind(this);
+    this.formatRouteType = this.formatRouteType.bind(this);
     this.formatDistance = this.formatDistance.bind(this);
     this.formatElevation = this.formatElevation.bind(this);
     this.formatTime = this.formatTime.bind(this);
 
+    this.errors = [];
     this.markers = [];
     this.removedMarkers = [];
 
@@ -79,10 +81,20 @@ class RouteCreatorMap extends React.Component {
     this.directionsDisplay = new google.maps.DirectionsRenderer();
     this.elevator = new google.maps.ElevationService;
     this.directionsDisplay.setMap(this.map);
-    // this.chart = new google.visualization.ColumnChart(chartDiv);
     this.geocoder = new google.maps.Geocoder();
 
+  }
 
+  renderErrors() {
+    return(
+      <ul>
+        {this.errors.map((error, i) => (
+          <li className="errors" key={`error-${i}`}>
+            {error}
+          </li>
+        ))}
+      </ul>
+    );
   }
 
   update(field) {
@@ -178,6 +190,7 @@ class RouteCreatorMap extends React.Component {
     let marker = new google.maps.Marker({
       position: latLng,
       animation: google.maps.Animation.DROP,
+      draggable: true
     });
     let markerPos = marker.getPosition().lat();
 
@@ -187,7 +200,7 @@ class RouteCreatorMap extends React.Component {
     if (this.markers.length > 1) {
       this.calculateAndDisplayRoute(this.DirectionsService, this.directionsDisplay);
     }
-  }
+}
 
 // this function taken from
 // https://developers.google.com/maps/documentation/javascript/directions#Waypoints
@@ -332,6 +345,10 @@ class RouteCreatorMap extends React.Component {
      }
   }
 
+  formatRouteType() {
+    return (this.state.routeType[0].toUpperCase() + this.state.routeType.slice(1));
+  }
+
   formatDistance() {
     let feet = this.state.length * 3.2808399;
     let miles = feet / 5280;
@@ -428,16 +445,15 @@ class RouteCreatorMap extends React.Component {
     return (
       <div className="map-container">
         <div className="map-tool-bar">
-          <form onSubmit={this.handleSearch} >
           <input className="location-search"
             placeholder="Enter a location"
             type="text"
             value={this.state.searchInput}
             onChange={this.update('searchInput')}></input>
-          <div className= "search-button" title="Search">
-            <div className="search-icon"></div>
+          <div className="search-button" title="Search"
+            onClick={() => this.handleSearch}>
+            <i className="fas fa-search"></i>
           </div>
-        </form>
           <div className="button" title="Undo last marker"
             onClick={this.undo}><i className="fas fa-undo"></i>
             <div className="button-label">Undo</div>
@@ -474,7 +490,7 @@ class RouteCreatorMap extends React.Component {
           <div className="route-stats-bar">
             <ul>
               <li>
-                 <strong id=""></strong>
+                 <strong id="">{this.formatRouteType()}</strong>
                  <div className="button-label" >Route Type</div>
               </li>
               <li>
@@ -514,6 +530,9 @@ class RouteCreatorMap extends React.Component {
             <form onSubmit={this.handleSave} className="modal-form" id="formModal">
               <p>Enter a name and description for your route below. On the next page,
               you'll be able to see and edit your route.</p>
+            <div className="route-errors" >
+              {this.renderErrors()}
+            </div>
             <label>Route Name (required)</label>
             <input type="text"
               value={this.state.name}
