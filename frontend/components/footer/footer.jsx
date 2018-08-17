@@ -5,8 +5,8 @@ const Footer = () => (
   <div className="footer">
     <a href="#/" className="logo-footer">Perestrava</a>
     <div className="icons">
-      <i className="fab fa-github"></i>
-      <i className="fab fa-linkedin"></i>
+      <a href="https://github.com/manofsteele"><i className="fab fa-github" ></i></a>
+      <a href="https://www.linkedin.com/in/jeremiahsteele"><i className="fab fa-linkedin" ></i></a>
     </div>
   </div>
 );

@@ -5,6 +5,8 @@
 
 .route-index-list {
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .index-header {
@@ -38,10 +40,33 @@
   margin-left: 20px;
 }
 
+.route-type-toggle {
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.type-button {
+  font-family: 'Russo', sans-serif;
+  font-weight: 400;
+  text-align: center;
+  border-radius: 2px;
+  border: 1px solid #ccccd1;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  font-size: 14px;
+  padding: 10px 16px;
+}
+
+.active {
+}
+
 .route-detail-tile {
   width: 300px;
   height: 350px;
   margin: 20px;
+  display: inline-block;
 }
 
 .route-detail-stats {
