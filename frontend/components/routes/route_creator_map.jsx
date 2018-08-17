@@ -454,7 +454,7 @@ class RouteCreatorMap extends React.Component {
             value={this.state.searchInput}
             onChange={this.update('searchInput')}></input>
           <div className="search-button" title="Search"
-            onClick={() => this.handleSearch}>
+            onClick={this.handleSearch}>
             <i className="fas fa-search"></i>
           </div>
           <div className="button" title="Undo last marker"

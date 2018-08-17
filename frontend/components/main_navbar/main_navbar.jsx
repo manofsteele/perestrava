@@ -14,13 +14,12 @@ const MainNavbar = () => (
     <div className="dropdown-left">
     <a href="#/" className="logo">Perestrava</a>
     <div className="dropdown-left-dashboard">
-      <span className="dashboard-top">Dashboard <i className="fas fa-angle-down"></i>
+      <span className="dashboard-top">Dashboard <i className="fas fa-angle-down"></i></span>
         <div className="dropdown-content-left" id="left-dropdown">
           <li>
             <a href="#/routes/index">My Routes</a>
           </li>
         </div>
-        </span>
       </div>
     </div>
     <div className="dropdown-container">
