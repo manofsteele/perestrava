@@ -127,7 +127,7 @@ Route.create!(
    "c_}eFnwfiV}Cs@{CRqYrBsZtBoHh@wDVkAwPkA_QwAwSyBsZiBcK{UoQ_O}KDmInBaIdKoN`IgT~OgTxB}OzB}Sw@uC@aC}AaBu@qBgCdAs@_AsBmCaEpB}@eDcFl@E_FsD}CeH|BsHc@yG{E}DgA|@bGvCb@vChHrEbDdBVgD~BwHsAqE{BsHeC{EkAgAsEgC?_DvC_DmAZoFgIiIs@}GbAk@vCzAlEJhGiDzD}AzD}J~HgTwEfNsKzRqMxE{F{BcAmA`B{C]qByBtCiGhFmDdD_C}@sDfDR~CsGrBiEpDuEyAqCcE_Cb@sJpEkDJ}@yARqD~@uFpAuFsAuAcE{DjAaGf@wDkEoAyDmDkAeAe@uAjA|@dBcAjADNuHFaD}E{CwC{@kBwHx@mMoBwJpC}JK{AqCxDgLdHVgHfBwEiA_HgB{EbAgFnCkDwB_@sFr@uAgCxIqHuA[oFbAyKtKsFzUeGfRiNfRaM|IsNjN{Db@k@q@iBuHeAgFqJz@}GzG_MzMyFu@gD}G~@mOCiKcUgQmNeI}MC}QaSkKoEc@oEfDqI`Gm_@jLcwAsBaViI}]eYsOwU|@yLvM]ha@iJzWcEtG_ClMaI`FaErEc@fUsGhK_f@kEiMq@qCrAiFrJ{G~QgPxb@_T`UyCnHyOvC_QeFyBOkBxEqErJgCfLcHbMwI~HoB|F{Hd[hC|RiJnYqFdDiCnTBpGgFzH{@hH`FxRdJvSZxT`ClGv@bAnAs@pMFtStMlDjHOlRtBf]dEpY~ErEhFzNlCvG\\fKjDhEhIbNjCvCnE}BlMyEn@~Bo@_C{ExBaM|EhNbHfCGhB_CbK{Ffb@oRpJ{AnDcG|H_Up`@aQ`PcGlEiHjI{DbKoAzG{SzGsHvK}EtFmM|NeStEyCrCaJlGiY~HiJzSuCxJeIrTm\\rB_NxC_`@pGcUxMiOvDiMvAu@Bt@sC~OZzDN|C_BfBnBbG`CzApGxHcIrC?vNtEvAqCbOaFlHzB`JnEvE{AtE_BpOq@tIcExDuDtViGtGaKtFq@`DhJxRtMzTdFmBEeHlDgBtJ{Kz@eFnTiM|CdIY`F_BlDv@hDlIzN]pJbCxCIJnBdAx@bDfBgAbEHMvCuBbAz@bAfDd@w@zBd@vCMfCjG|EO~G`CR`HwFl@mBfCxFtCdLvEs@OlE~KMd_@aGrF_C`C{FpHoFt@oChD{FpBMzAlALrBjAxDzJmA|G}@jK^fPoAbOe@dAD~F_AvPgB`@zFZzExL_BjBvD~AdUtB`[rIm@fYoBvf@iDt@s@]eCNO",
   elevation_gain: 2106.97352981567,
   routeType: "bike",
-  user_id: 12,
+  user_id: 1,
   duration: 18570.0,
   marker_string: "37.836805808795205,-122.2643952554725,37.83704614116397,-122.26313805959308"
 )
@@ -140,7 +140,7 @@ Route.create!(
    "_qpeFlfijVkANA\\@HDj@JZHRJf@f@lD?LAh@E|@PtD\\nF?dABXSLFNNKDLJ\\\\v@@NGpACn@PhALjDD^L`@b@`AFVFb@Cx@KlA?jBHv@G?@`@DJHRDVB~AJzBDP^d@H\\BZFNPZJP?\\NnAI@UF?@l@vBh@|BFZPvADhBA`@A^CTN@L@Ed@SrCMrBEp@UhCAPH@ZJZL`@T\\\\Vl@PbADj@BnA?nABdALjAv@lFt@dFNr@\\`Aj@~@hBjCv@vAnA`C_@v@mBdE[z@Uv@WpAOtAE~@@rCFnAL|@Nn@Pb@h@z@VVVNXJb@HtAPt@Th@j@V`@JTj@pCxAzHZrBb@lD@FQf@KRc@Ji@VeCxAwAb@o@Ju@FyCNy@N{@X}FjCGBx@a@dAe@fDuAp@Sn@InDQlASp@St@[nAy@l@[d@QREBEXu@CQg@_Em@mD{A_IWaAc@w@SQ]Wu@Q}AS]IWMSOW[k@eAKa@Qw@IkAEyA@sBF_APyAVgARq@nAuCnAqCDIGGsAmC{@yAcBcCi@_A[eA{BeOKgAAeA?qACkAAYJCAIMq@ESYq@MOu@g@]O[KKA?CLsAH_AFeAJwAVsD]CF_A?e@Ak@K{AW{Am@eC_@mAAORGHAOsA?YFQVq@Da@Bq@E_@NAPA?IA]e@kH",
   elevation_gain: 146.048526763916,
   routeType: "run",
-  user_id: 12,
+  user_id: 1,
   duration: 5652.0,
   marker_string: "37.7731176420072,-122.44092192494509,37.7713805623307,-122.45060362426761"
 )
