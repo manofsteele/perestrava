@@ -1,6 +1,5 @@
 .main-navbar {
   margin-top: 10px;
-  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
   height: 60px;
@@ -65,7 +64,7 @@
 
 .dropdown-content-left {
   left: 40px;
-  top: 45px;
+  top: 35px;
   display: none;
   position: absolute;
   min-width: 100px;
@@ -76,8 +75,8 @@
 }
 
 .dropdown-content-right {
-  left: -80px;
-  top: 70px;
+  right: 0px;
+  top: 60px;
   display: none;
   position: absolute;
   min-width: 100px;
