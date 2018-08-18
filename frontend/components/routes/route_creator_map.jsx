@@ -448,15 +448,17 @@ class RouteCreatorMap extends React.Component {
     return (
       <div className="map-container">
         <div className="map-tool-bar">
+          <form onSubmit={this.handleSearch}>
           <input className="location-search"
             placeholder="Enter a location"
             type="text"
             value={this.state.searchInput}
             onChange={this.update('searchInput')}></input>
-          <div className="search-button" title="Search"
+          <button className="search-button" title="Search"
             onClick={this.handleSearch}>
             <i className="fas fa-search"></i>
-          </div>
+          </button>
+        </form>
           <div className="button" title="Undo last marker"
             onClick={this.undo}><i className="fas fa-undo"></i>
             <div className="button-label">Undo</div>
