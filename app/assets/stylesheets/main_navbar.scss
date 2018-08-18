@@ -101,3 +101,7 @@
   justify-content: center;
   margin-top: 10px;
 }
+
+.dropdown-content-left:hover, .dropdown-content-right:hover {
+  box-shadow: 1px 1px 5px #999;
+}
