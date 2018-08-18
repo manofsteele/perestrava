@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <title>Perestrava</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Russo+One|Ubuntu"
+    rel="stylesheet">
+
+    <script>
+      window.google_maps_api_key="<%= google_maps_api_key%>"
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%= google_maps_api_key%>"
+      type="text/javascript"></script>
+      <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script type="text/javascript">
+      google.charts.load('current', {packages: ['columnchart']});
+    </script>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <%= javascript_include_tag 'application' %>
+    <script type="text/javascript">
+      window.not_found="<%= image_url('not_found.jpg') %>"
+    </script>
+    <script type="text/javascript">
+      window.bike_under_banyans="<%= image_url('bike_under_banyans.jpg') %>"
+    </script>
+  </head>
+
+  <body>
+    <%= yield %>
+  </body>
+</html>
