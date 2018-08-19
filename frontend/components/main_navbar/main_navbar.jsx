@@ -1,7 +1,6 @@
 import React from 'react';
 
 const MainNavbar = (props) => {
-  console.log(props);
   return (
   <div className="main-navbar">
     <div className="dropdown-left">

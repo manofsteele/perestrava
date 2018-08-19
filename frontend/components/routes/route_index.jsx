@@ -139,7 +139,6 @@ class RouteIndex extends React.Component {
             let startMarkerKey = `&markers=icon:${greenDot}|${markers[0]}`;
             let endMarkerKey = `&markers=icon:${checkeredFlag}|${markers[markers.length - 1]}`;
             let src = urlBase + size + "&path=weight:2|color:blue|enc:" + route.polyline + startMarkerKey + endMarkerKey + "&" + key;
-            console.log(route.createdAt);
             return (
               <li key={route.id} className="route-detail-tile">
                 <div className="index-map" style={{backgroundImage: `url(${encodeURI(src)})`}}></div>

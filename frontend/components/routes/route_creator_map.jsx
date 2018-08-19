@@ -120,7 +120,6 @@ class RouteCreatorMap extends React.Component {
         runButton.classList.add("active");
       }
     }
-    // this.calculateAndDisplayRoute(this.DirectionsService, this.directionsDisplay);
   }
 
   toggleElevationPane(showState) {
@@ -381,6 +380,7 @@ class RouteCreatorMap extends React.Component {
       }
     }
   }
+  
   // below is from Google Maps API page,
   // https://developers.google.com/maps/documentation/javascript/examples/elevation-paths
 
