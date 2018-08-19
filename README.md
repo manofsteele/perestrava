@@ -15,6 +15,25 @@ will be deepened and extended in the future.
 * Interactive route map where users can create and save routes
 * Route index page, showing all a user's routes
 
+### Route builder
+
+![Route builder demo](route_demo.gif)
+
+The route builder uses the Google Maps API to render a map, allow the user to
+place markers on the map, and calculate distance, elevation gain, and estimated
+moving time. The user can undo the placement of markers, redo the placement of
+markers, clear all the markers, and undo the clearing of markers. Under the
+statistics bar is an elevation profile panel that can toggle from hidden to
+shown. The user can also choose whether the route is a bicycling or running
+route, and the statistics bar will update based on this preference. Once at least
+two markers have been placed, the user can choose to save the route, entering
+a name and description of the route.
+
+A user's saved routes are displayed on an index page, again by making calls to
+Google Maps with methods from the Google Maps API. The starting and finishing
+markers are saved in a string in the database, and are shown on the index page's
+maps of each route.
+
 ## Projected features
 
 * Individual show pages for each route, reached by clicking on route on the index page
