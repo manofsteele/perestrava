@@ -18,7 +18,10 @@ import { Link } from 'react-router-dom';
       <hgroup className="header-group">
         <a href="#/" className="logo">Perestrava</a>
         <p className="header-name">Welcome, {currentUser.username}</p>
-        <button className="navlink" onClick={logout}>Log Out</button>
+        <div>
+          <Link className="navlink" to="/routes/index">My Routes</Link>
+          <button className="navlink" onClick={logout}>Log Out</button>
+        </div>
       </hgroup>
     );
 
