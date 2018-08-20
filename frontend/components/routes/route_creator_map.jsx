@@ -105,7 +105,10 @@ class RouteCreatorMap extends React.Component {
 
 
   handleWorkoutTypeToggle(routeType) {
-    this.setState({routeType: routeType}, () => this.calculateAndDisplayRoute(this.DirectionsService, this.directionsDisplay));
+    this.setState({
+      routeType: routeType},
+      () => this.calculateAndDisplayRoute(this.DirectionsService, this.directionsDisplay)
+    );
     let rideButton = document.getElementById('ride-button');
     let runButton = document.getElementById('run-button');
     if (routeType === 'bike') {
@@ -380,7 +383,7 @@ class RouteCreatorMap extends React.Component {
       }
     }
   }
-  
+
   // below is from Google Maps API page,
   // https://developers.google.com/maps/documentation/javascript/examples/elevation-paths
 

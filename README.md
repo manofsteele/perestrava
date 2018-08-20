@@ -34,6 +34,31 @@ Google Maps with methods from the Google Maps API. The starting and finishing
 markers are saved in a string in the database, and are shown on the index page's
 maps of each route.
 
+#### Handling a render dependent on change of state
+
+In route_creator_map.jsx, the function calculateAndDisplayRoute handles the requests
+to Google Maps, calculating and displaying the route. The elevation and statistics
+are recalculated here as well, via calls within calculateAndDisplayRoute. This became
+a problem when writing the function handleWorkoutTypeToggle, which resets the workout
+type in the component's state. handleWorkoutType also calls calculateAndDisplayRoute,
+but because setState is asynchronous, it doesn't run until after handleWorkoutType has
+finished running. This means that calculateAndDisplayRoute did not have access to the
+new state, and thus did not re-render the route and statistics unless the toggle
+button was clicked twice. This was solved by making calculateAndDisplayRoute a
+callback to the call of setState:
+
+```javascript
+handleWorkoutTypeToggle(routeType) {
+  this.setState({
+    routeType: routeType},
+    () => this.calculateAndDisplayRoute(this.DirectionsService, this.directionsDisplay)
+  );
+  let rideButton = document.getElementById('ride-button');
+  let runButton = document.getElementById('run-button');
+...
+}
+```
+
 ## Projected features
 
 * Individual show pages for each route, reached by clicking on route on the index page
