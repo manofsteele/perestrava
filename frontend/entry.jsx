@@ -22,11 +22,8 @@ document.addEventListener("DOMContentLoaded", () => {
     store = configureStore();
   }
 
-  // const store = configureStore();
   ReactDOM.render(<Root store={store}/>, root);
-  // window.login = ApiUtil.login;
-  // window.logout = ApiUtil.logout;
-  // window.signup = ApiUtil.signup;
+
   window.fetchRoute = RouteActions.fetchRoute;
   window.fetchRoutes = RouteActions.fetchRoutes;
   window.createRoute = RouteActions.createRoute;
