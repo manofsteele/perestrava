@@ -24,6 +24,7 @@
   height: 400px;
   width: 300px;
   position: relative;
+  text-align: left;
 }
 
 .splash-text > h1 {
@@ -58,11 +59,20 @@ h2 > .logo {
 
 }
 
+.logo-login {
+  font-family: 'Russo One', sans-serif;
+  color: #0013E5;
+  font-size: 40px;
+  text-transform: uppercase;
+  // padding-left: 20px;
+  margin-top: 15px;
+}
+
 .login-panel {
   font-family: 'Russo', sans-serif;
   margin-top: 100px;
   padding-top: 50px;
-  height: 450px;
+  height: 500px;
   width: 300px;
   background: rgba(0,0,0,0.75);
   margin: 0 auto;

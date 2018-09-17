@@ -61,7 +61,7 @@ class SessionForm extends React.Component {
         <div className="splash-text">
           <h1 className="first-head">Run. Ride. Repeat.</h1>
           <h1 className="second-head">Map. Measure. Marvel.</h1>
-          <h2> <a href="#/login" className="logo">Perestrava.</a> </h2>
+          <h2> <a href="#/login" className="logo-login">Perestrava.</a> </h2>
           <h2> Precision and Performance. </h2>
           <h3>An app for athletes of all levels to track their rides and runs.</h3>
         </div>
