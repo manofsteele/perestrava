@@ -1,3 +1,12 @@
+.splash {
+  // this one is for heroku
+  // background-image: image-url('bike-under-banyans.JPG');
+
+  // and this one works on localhost:3000
+
+  background-image: url('bike-under-banyans.jpg');
+}
+
 .splash > h1 {
   font-family: 'Ubuntu', sans-serif;
   text-align: center;
