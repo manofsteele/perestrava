@@ -1,16 +1,45 @@
 .splash {
   // this one is for heroku
-  // background-image: image-url('bike-under-banyans.JPG');
+  // background-image: image-url('bike_under_banyans.JPG');
 
   // and this one works on localhost:3000
 
-  background-image: url('bike-under-banyans.jpg');
+  background-image: url('bike_under_banyans.jpg');
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin: -10px auto;
+  margin-bottom: -15px;
 }
 
-.splash > h1 {
-  font-family: 'Ubuntu', sans-serif;
-  text-align: center;
-  font-size: 15px;
+.splash-headline {
+  padding-top: 40px;
+}
+
+.splash-headline > h1 {
+  font-family: 'Russo', sans-serif;
+  text-align: left;
+  margin-top: 20px;
+  font-size: 40px;
   color: #0013E5;
   margin-bottom: 20px;
+  margin-left: 40px;
+  text-shadow: 1px 1px  #99ddff;
+  letter-spacing: .5px;
+  font-weight: 600;
+}
+
+.splash-headline-logo {
+  font-family: 'Russo', sans-serif;
+  text-align: left;
+  margin-top: 30px;
+  font-size: 50px;
+  color: #0013E5;
+  margin-bottom: 20px;
+  margin-left: 40px;
+  text-shadow: 1px 1px  #99ddff;
+  letter-spacing: 1px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 40px;
 }
