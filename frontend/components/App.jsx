@@ -10,6 +10,7 @@ import MainNavbarContainer from './main_navbar/main_navbar_container';
 import RouteCreatorContainer from './routes/route_creator_container';
 import RouteIndexContainer from './routes/route_index_container';
 import RouteBuilderNavBar from './routes/route_builder_navbar';
+import RouteShowContainer from './routes/route_show_container';
 import Footer from './footer/footer';
 import Empty from './empty';
 import NotFound from './not_found';
@@ -25,6 +26,7 @@ const App = () => (
         <AuthRoute exact path="/signup" component={NavbarContainer } />
         <ProtectedRoute exact path="/routes/new" component={RouteBuilderNavBar} />
         <ProtectedRoute exact path="/routes/index" component={MainNavbarContainer} />
+        <ProtectedRoute path="/routes/:routeId" component={MainNavbarContainer} />
         <Route exact path="/" component={NavbarContainer} />
         <Route exact path="/not_found" component={NavbarContainer} />
       </Switch>
@@ -34,6 +36,7 @@ const App = () => (
       <AuthRoute exact path="/signup" component={SignupFormContainer} />
       <ProtectedRoute exact path="/routes/new" component={RouteCreatorContainer} />
       <ProtectedRoute exact path="/routes/index" component={RouteIndexContainer} />
+      <ProtectedRoute path="/routes/:routeId" component={RouteShowContainer} />
       <Route exact path="/" component={Splash} />
       <Route exact path="/not_found" component={NotFound} />
       <Redirect to="/not_found" />

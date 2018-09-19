@@ -11,7 +11,7 @@ const mapStateToProps = (state = {}, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    fetchRoute: route => dispatch(fetchRoute(route))
+    fetchRoute: route => dispatch(fetchRoute(ownProps.id))
   };
 };
 
