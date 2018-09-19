@@ -1,9 +1,27 @@
+.not-found-container {
+  background-image: url('not_found.jpg');
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin: -10px auto;
+  margin-bottom: -15px;
+}
+
 .not-found-container > h1, .not-found-container > center {
-  font-family: 'Ubuntu', sans-serif;
+  font-family: 'Russo', sans-serif;
   text-align: center;
-  font-size: 15px;
+  font-size: 30px;
   color: #0013E5;
   margin-bottom: 20px;
+  text-shadow: 1px 1px  #99ddff;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.not-found-container > h1 {
+  font-size: 40px;
+  padding-top: 30px;
+  padding-bottom: 20px;
 }
 
 .not_found:hover {
