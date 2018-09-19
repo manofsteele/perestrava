@@ -1,10 +1,10 @@
 .splash {
   // this one is for heroku
-  background-image: image-url('bike_under_banyans.JPG');
+  // background-image: image-url('bike_under_banyans.JPG');
 
   // and this one works on localhost:3000
 
-  // background-image: url('bike_under_banyans.jpg');
+  background-image: url('bike_under_banyans.jpg');
   height: 100%;
   background-size: cover;
   background-repeat: no-repeat;
