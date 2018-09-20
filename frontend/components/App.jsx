@@ -26,7 +26,7 @@ const App = () => (
         <AuthRoute exact path="/signup" component={NavbarContainer } />
         <ProtectedRoute exact path="/routes/new" component={RouteBuilderNavBar} />
         <ProtectedRoute exact path="/routes/index" component={MainNavbarContainer} />
-        <ProtectedRoute path="/routes/:routeId" component={MainNavbarContainer} />
+        <ProtectedRoute path="/routes/:id" component={MainNavbarContainer} />
         <Route exact path="/" component={NavbarContainer} />
         <Route exact path="/not_found" component={NavbarContainer} />
       </Switch>
@@ -36,7 +36,7 @@ const App = () => (
       <AuthRoute exact path="/signup" component={SignupFormContainer} />
       <ProtectedRoute exact path="/routes/new" component={RouteCreatorContainer} />
       <ProtectedRoute exact path="/routes/index" component={RouteIndexContainer} />
-      <ProtectedRoute path="/routes/:routeId" component={RouteShowContainer} />
+      <ProtectedRoute path="/routes/:id" component={RouteShowContainer} />
       <Route exact path="/" component={Splash} />
       <Route exact path="/not_found" component={NotFound} />
       <Redirect to="/not_found" />

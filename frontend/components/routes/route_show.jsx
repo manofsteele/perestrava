@@ -2,14 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link, withRouter } from 'react-router-dom';
 
+// let route;
 class RouteShow extends React.Component {
+  
 
   constructor(props) {
     super(props);
-  }
-  
-  componentDidMount() {
-    this.props.fetchRoute(this.props.match.params.routeId);
+    
+}
+
+componentDidMount() {
+    this.props.fetchRoute(this.props.match.params.id);
   }
 
   render() {

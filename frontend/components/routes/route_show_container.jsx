@@ -5,13 +5,13 @@ import RouteShow from './route_show';
 const mapStateToProps = (state = {}, ownProps) => {
   return {
     currentUser: state.session.currentUser,
-    route: state.entities.routes[ownProps.id]
+    route: state.entities.routes[ownProps.match.params.id]
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    fetchRoute: route => dispatch(fetchRoute(ownProps.id))
+    fetchRoute: id => dispatch(fetchRoute(id))
   };
 };
 
