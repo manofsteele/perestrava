@@ -2,15 +2,77 @@
     min-height: 700px;
 }
 
+.show-map-and-stats {
+  margin-left: 20px;
+  display: flex; 
+  flex-direction: row;
+  font-family: 'Russo', sans-serif;
+}
+
 .show-map {
-    width: 400px;
-    height: 300px;
+    width: 600px;
+    height: 400px;
+    margin-right: 20px;
 }
 
 .show-header {
   margin-left: 10px;
   padding-top: 10px;
-  padding-bottom: 40px;
+  padding-bottom: 30px;
   border-top: 1px solid grey;
-  border-bottom: 1px solid grey;
+  margin-top: 15px;
+}
+
+.show-headline {
+  color: #2d2d32;
+  font-family: 'Russo', sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  margin-left: 10px;
+  margin-top: 20px;
+  margin-bottom: 10px;  
+}
+
+.show-title {
+  font-family: 'Russo', sans-serif;
+  margin-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 30px;
+}
+
+.show-author {
+  font-size: 25px;
+}
+
+.show-date {
+  font-family: 'Russo', sans-serif;
+  font-size: 15px; 
+  margin-bottom: 40px;
+}
+
+.show-stats-line1 {
+    margin-top: 40px;
+}
+
+.show-stats-list {
+  display: flex; 
+  flex-direction: row;
+  margin-bottom: 20px;
+}
+
+.show-stats-list > li {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.show-stats-stat-item {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.show-stats-stat-name {
+  font-size: 12px; 
+  color: #99999e;
+  margin-right: 20px;
 }

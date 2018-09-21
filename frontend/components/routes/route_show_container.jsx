@@ -5,7 +5,8 @@ import RouteShow from './route_show';
 const mapStateToProps = (state = {}, ownProps) => {
 
   return {
-    currentUser: state.session.currentUser,
+    // currentUser: state.session.currentUser,
+    currentUser: state.entities.users[state.session.id],
     route: state.entities.routes[ownProps.match.params.id]
   };
 };
