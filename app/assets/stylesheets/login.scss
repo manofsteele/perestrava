@@ -17,6 +17,8 @@
   padding: 50px;
   margin: -10px auto;
   margin-bottom: -15px;
+  overflow: hidden;
+
 }
 
 .splash-text {
@@ -117,6 +119,7 @@ h2 > .logo {
   padding: 5px 30px;
   margin-bottom: 20px;
   background-color: #338EFC;
+  text-transform: uppercase;
 }
 
 .demo-submit {
