@@ -10,10 +10,15 @@
   background-repeat: no-repeat;
   margin: -10px auto;
   margin-bottom: -15px;
+  text-overflow: hidden;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .splash-headline {
   padding-top: 40px;
+  max-width: 700px;
+
 }
 
 .splash-headline > h1 {

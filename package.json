@@ -9,7 +9,7 @@
     "lodash": "^4.17.10",
     "logger": "0.0.1",
     "react": "^16.4.2",
-    "react-dom": "^16.4.2",
+    "react-dom": "^16.5.2",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
     "redux": "^4.0.0",

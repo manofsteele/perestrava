@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Link, withRouter } from "react-router-dom";
 
 const urlBase = "https://maps.googleapis.com/maps/api/staticmap?";
 const key = `key=${window.google_maps_api_key}`;
@@ -140,6 +141,7 @@ class RouteIndex extends React.Component {
             let endMarkerKey = `&markers=icon:${checkeredFlag}|${markers[markers.length - 1]}`;
             let src = urlBase + size + "&path=weight:2|color:blue|enc:" + route.polyline + startMarkerKey + endMarkerKey + "&" + key;
             return (
+              <Link to={`/routes/${route.id}`}>
               <li key={route.id} className="route-detail-tile">
                 <div className="index-map" style={{backgroundImage: `url(${encodeURI(src)})`}}></div>
                 <ul className="route-detail-stats">
@@ -164,8 +166,9 @@ class RouteIndex extends React.Component {
                   </li>
                 </ul>
               </li>
-            );
-          })}
+              </Link>
+        );
+      })}
         </ul>
         <div className="grey-bar"></div>
       </div>
