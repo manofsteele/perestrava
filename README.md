@@ -65,7 +65,7 @@ handleWorkoutTypeToggle(routeType) {
 
 Each time the collection of placed markers is altered, `calculateAndDisplayRoute` is called. This function 
 processes `this.markers`, and creates two arrays of position data, `path` and `positions`. `path` is for the elevation calculation, and positions is for the route calculation. The Google Maps API methods behind these calculations require the location data in slightly different form, so both arrays are necessary. The route calculation uses the Directions API, whose methods require route origin and destination to be 
-specified. The `this.markerString` variable, which is used for calculation of the route polyline when it is displayed on the index and show pages, is also updated by this function.
+specified. The `this.state.markerString` variable, which is used for calculation of the route polyline when it is displayed on the index and show pages, is also updated by this function.
 
 
 ```javascript 
