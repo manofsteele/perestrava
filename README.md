@@ -16,6 +16,7 @@ will be deepened and extended in the future.
 * Secure frontend and backend user authentication using BCrypt
 * Interactive route map where users can create and save routes
 * Route index page, showing all a user's routes
+* Route show pages for each invidual route, accessible from the index page
 
 ### Route builder
 
