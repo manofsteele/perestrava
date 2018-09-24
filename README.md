@@ -6,7 +6,7 @@ Perestrava is a Web app for cyclists and runners that lets users create and stor
 their riding and running routes using an interactive map. It is modeled after
 the Web version of Strava.
 
-![Route builder screenshot](route_builder_screenshot.png)
+![Route builder screenshot](readme_images/route_builder_screenshot.png)
 
 Perestrava is built on a Ruby on Rails back end, with a PostgreSQL database and a
 React/Redux front end. The first version of this site was built as a project with
@@ -31,7 +31,7 @@ will be deepened and extended in the future.
 
 ### Route builder
 
-![Route builder demo](route_demo.gif)
+![Route builder demo](readme_images/route_demo.gif)
 
 The route builder uses the Google Maps API to render a map, allow the user to
 place markers on the map, and calculate distance, elevation gain, and estimated
@@ -48,6 +48,8 @@ Google Maps with methods from the Google Maps API. The starting and finishing
 markers are saved in a string in the database, and are shown on the index page's
 maps of each route. Clicking on a route on the index page takes the user to a show 
 page for the route, with a larger map and display of route statistics.
+
+![Route index page](readme_images/index_page_screenshot.png)
 
 #### Handling a render dependent on change of state
 
