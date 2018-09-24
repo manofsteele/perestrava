@@ -163,8 +163,6 @@ class RouteShow extends React.Component {
   render() {
     let route = this.props.route; 
     // || { id: "loading", name: "loading", description: "loading", length: 0, polyline: ""};
-    console.log(route);
-      console.log(this.props);
 
     if (route !== undefined) {
         this.markers = this.parseMarkers(route.markerString);
