@@ -18,6 +18,15 @@ will be deepened and extended in the future.
 * Route index page, showing all a user's routes
 * Route show pages for each invidual route, accessible from the index page
 
+## Technologies 
+
+* Ruby on Rails back end 
+* React/Redux front end 
+* Google Maps API (map placement and marker placement)
+* Google Maps Directions Service API (route calculation)
+* Google Maps Elevation API (elevation calculation)
+* Google Visualization API (elevation chart)
+
 ### Route builder
 
 ![Route builder demo](route_demo.gif)
