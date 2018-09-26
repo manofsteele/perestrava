@@ -175,7 +175,7 @@ class RouteShow extends React.Component {
 
             <div className="show">
                 <div className="show-header">
-                    <h2 className="show-headline">My Routes / <b>{route.name}</b></h2>
+                    <h2 className="show-headline"><Link to={`/routes/index/`}>My Routes </Link>/ <b>{route.name}</b></h2>
                     <h1 className="show-title">{route.name}</h1>
                 </div>
                 <div className="show-map-and-stats" >
