@@ -2,7 +2,7 @@
   margin-top: 10px;
   display: flex;
   justify-content: space-between;
-  height: 60px;
+  height: 70px;
 }
 
 .main-navbar > a {
@@ -14,7 +14,7 @@
 .dropdown-container {
   display: flex;
   flex-direction: row;
-  height: 60px;
+  height: 70px;
 }
 
 .dropdown-left {
@@ -64,7 +64,7 @@
 
 .dropdown-content-left {
   left: 40px;
-  top: 35px;
+  top: 45px;
   display: none;
   position: absolute;
   min-width: 100px;
@@ -76,7 +76,7 @@
 
 .dropdown-content-right {
   right: 0px;
-  top: 60px;
+  top: 70px;
   display: none;
   position: absolute;
   min-width: 100px;
