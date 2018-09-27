@@ -25,6 +25,10 @@ class RouteShow extends React.Component {
 
   }
   
+    handleDelete(routeId) {
+        this.props.deleteRoute(routeId).then( () => this.props.history.push("/routes/index"));
+    }
+
   parseMarkers(markerString) {
     let markers = [];
     let vals = markerString.split(",");
@@ -166,7 +170,6 @@ class RouteShow extends React.Component {
 
     if (route !== undefined) {
         this.markers = this.parseMarkers(route.markerString);
-        console.log(this.markers);
         let startMarkerKey = `&markers=icon:${greenDot}|${this.markers[0]}`;
         let endMarkerKey = `&markers=icon:${checkeredFlag}|${this.markers[this.markers.length - 1]}`;
         let src = urlBase + size + "&path=weight:2|color:blue|enc:" + route.polyline + startMarkerKey + endMarkerKey + "&" + key;
@@ -211,11 +214,14 @@ class RouteShow extends React.Component {
                       </div>
                     </div>
                 </div>    
-                <div className="show-elevation">
+                {/* <div className="show-elevation">
                     <div className="elevation-chart" id="elevation-chart">
 
                     </div>
-                </div>            
+                </div>     */}
+                <button className="show-delete-button" onClick={() => this.handleDelete(route.id)}>
+                    Delete Route
+                </button>
             </div>
         );
     } else { 

@@ -15,6 +15,7 @@ class RouteIndex extends React.Component {
     this.state = {
       route_type: 'bike',
     };
+    this.handleDelete = this.handleDelete.bind(this);
     this.parseMarkers = this.parseMarkers.bind(this);
     this.formatTime = this.formatTime.bind(this);
     this.formatDistance = this.formatDistance.bind(this);
@@ -25,6 +26,10 @@ class RouteIndex extends React.Component {
 
   componentDidMount() {
     this.props.fetchRoutes();
+  }
+
+  handleDelete(routeId) {
+    this.props.deleteRoute(routeId);
   }
 
   parseMarkers(markerString) {
@@ -140,34 +145,55 @@ class RouteIndex extends React.Component {
             let startMarkerKey = `&markers=icon:${greenDot}|${markers[0]}`;
             let endMarkerKey = `&markers=icon:${checkeredFlag}|${markers[markers.length - 1]}`;
             let src = urlBase + size + "&path=weight:2|color:blue|enc:" + route.polyline + startMarkerKey + endMarkerKey + "&" + key;
-            return (
-              <Link to={`/routes/${route.id}`}>
-              <li key={route.id} className="route-detail-tile">
-                <div className="index-map" style={{backgroundImage: `url(${encodeURI(src)})`}}></div>
-                <ul className="route-detail-stats">
-                  <li className="route-detail-name">
-                    <label >{route.name}</label>
+            return <div className="route-detail" key={route.id}>
+                <Link to={`/routes/${route.id}`}>
+                  <li className="route-detail-tile">
+                    <div className="index-map" style={{ backgroundImage: `url(${encodeURI(src)})` }} />
+                    <ul className="route-detail-stats">
+                      <li className="route-detail-name">
+                        <label>{route.name}</label>
+                      </li>
+                      <li className="route-detail-list">
+                        <label className="route-detail-label">
+                          Distance
+                        </label>
+                        <strong className="route-detail-data-big">
+                          {this.formatDistance(route)}
+                        </strong>
+                      </li>
+                      <li className="route-detail-list">
+                        <label className="route-detail-label">
+                          Elevation Gain
+                        </label>
+                        <strong className="route-detail-data-big">
+                          {this.formatElevation(route)}
+                        </strong>
+                      </li>
+                      <li className="route-detail-list">
+                        <label className="route-detail-label">
+                          Est. Moving Time
+                        </label>
+                        <strong className="route-detail-data-small">
+                          {this.formatTime(route)}
+                        </strong>
+                      </li>
+                      <li className="route-detail-list">
+                        <label className="route-detail-label">
+                          Created on{" "}
+                        </label>
+                        <strong className="route-detail-data-small">
+                          {this.formatDate(route.createdAt)}
+                        </strong>
+                      </li>
+                    </ul>
                   </li>
-                  <li className="route-detail-list">
-                    <label className="route-detail-label">Distance</label>
-                    <strong className="route-detail-data-big">{this.formatDistance(route)}</strong>
-                  </li>
-                  <li className="route-detail-list">
-                    <label className="route-detail-label">Elevation Gain</label>
-                    <strong className="route-detail-data-big">{this.formatElevation(route)}</strong>
-                  </li>
-                  <li className="route-detail-list">
-                    <label className="route-detail-label">Est. Moving Time</label>
-                    <strong className="route-detail-data-small">{this.formatTime(route)}</strong>
-                  </li>
-                  <li className="route-detail-list">
-                    <label className="route-detail-label">Created on </label>
-                    <strong className="route-detail-data-small">{this.formatDate(route.createdAt)}</strong>
-                  </li>
-                </ul>
-              </li>
-              </Link>
-        );
+                </Link>
+                {/* <strong className="delete-button"> */}
+                  <button className="delete-button" onClick={() => this.handleDelete(route.id)}>
+                    Delete Route
+                  </button>
+                {/* </strong> */}
+              </div>;
       })}
         </ul>
         <div className="grey-bar"></div>

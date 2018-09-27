@@ -66,11 +66,19 @@
 .active {
 }
 
+.route-detail{
+  width: 300px;
+  height: 435px;
+  margin: 20px;
+  display: flex; 
+  flex-direction: column;
+}
+
 .route-detail-tile {
   width: 300px;
   height: 350px;
-  margin: 20px;
   display: inline-block;
+  margin-bottom: 10px;
 }
 
 .route-detail-stats {
@@ -79,7 +87,6 @@
   height: 150px;
   padding: 15px;
 }
-
 
 .route-detail-name {
   margin-top: 15px;
@@ -115,4 +122,14 @@
 .grey-bar {
   margin-top: 50px;
   height: 50px;
+}
+
+.delete-button {
+  border: 1px solid #e6e6eb;
+  border-radius: 2px;
+  font-family: 'Russo', sans-serif;
+  font-size: 16px;
+  padding: 10px 16px;
+  margin-top: 25px; 
+  width: 100px; 
 }
