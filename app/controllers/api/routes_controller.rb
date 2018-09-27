@@ -19,6 +19,10 @@ class Api::RoutesController < ApplicationController
     render "api/routes/show"
   end
 
+  def destroy 
+    @route.destroy
+  end
+
   def route_params
     params.require(:route).permit(:name,
        :description,

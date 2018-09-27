@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { fetchRoute } from '../../actions/route_actions';
+import { fetchRoute, deleteRoute } from '../../actions/route_actions';
 import RouteShow from './route_show';
 
 const mapStateToProps = (state = {}, ownProps) => {
@@ -13,7 +13,8 @@ const mapStateToProps = (state = {}, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    fetchRoute: id => dispatch(fetchRoute(id))
+    fetchRoute: id => dispatch(fetchRoute(id)),
+    deleteRoute: routeId => (dispatch(deleteRoute(routeId)))
   };
 };
 
