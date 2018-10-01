@@ -114,35 +114,17 @@ class RouteCreatorMap extends React.Component {
     );
     let rideButton = document.getElementById('ride-button');
     let runButton = document.getElementById('run-button');
-    if (routeType === 'bike') {
-      if (!rideButton.classList.contains("active")) {
-        rideButton.classList.add("active");
-        runButton.classList.remove("active");
-      }
-    }
-    if (routeType === 'run') {
-      if (!runButton.classList.contains("active")) {
-        rideButton.classList.remove("active");
-        runButton.classList.add("active");
-      }
-    }
+    rideButton.classList.toggle("active");
+    runButton.classList.toggle("active");
   }
 
-  toggleElevationPane(showState) {
+  toggleElevationPane() {
     let elevationPane = document.getElementById('elevation-chart');
     let showElevation = document.getElementById('show-elevation');
     let hideElevation = document.getElementById('hide-elevation');
-    if (showState === 'show') {
-      showElevation.classList.add("hidden");
-      elevationPane.classList.remove("hidden");
-      hideElevation.classList.remove("hidden");
-      this.calculateAndDisplayRoute(this.DirectionsService, this.directionsDisplay);
-    }
-    if (showState === 'hide') {
-      showElevation.classList.remove("hidden");
-      elevationPane.classList.add("hidden");
-      hideElevation.classList.add("hidden");
-    }
+    showElevation.classList.toggle("hidden");
+    elevationPane.classList.toggle("hidden");
+    hideElevation.classList.toggle("hidden");
   }
 
   saveButtonOpenModal() {
@@ -487,12 +469,12 @@ class RouteCreatorMap extends React.Component {
                  <div className="button-label" >Estimated Moving Time</div>
               </li>
               <li className="button-label" id="show-elevation"
-                onClick={() => this.toggleElevationPane('show')}>
+                onClick={() => this.toggleElevationPane()}>
                  <strong id=""> </strong>
                  <div >Show Elevation</div>
               </li>
               <li className="button-label hidden" id="hide-elevation"
-                onClick={() => this.toggleElevationPane('hide')}>
+                onClick={() => this.toggleElevationPane()}>
                  <strong id=""> </strong>
                  <div >Hide Elevation</div>
               </li>

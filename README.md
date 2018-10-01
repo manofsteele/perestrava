@@ -65,15 +65,16 @@ button was clicked twice. This was solved by making `calculateAndDisplayRoute` a
 callback to the call of `setState`:
 
 ```javascript
-handleWorkoutTypeToggle(routeType) {
-  this.setState({
-    routeType: routeType},
-    () => this.calculateAndDisplayRoute(this.DirectionsService, this.directionsDisplay)
-  );
-  let rideButton = document.getElementById('ride-button');
-  let runButton = document.getElementById('run-button');
-...
-}
+  handleWorkoutTypeToggle(routeType) {
+    this.setState({
+      routeType: routeType},
+      () => this.calculateAndDisplayRoute(this.DirectionsService, this.directionsDisplay)
+    );
+    let rideButton = document.getElementById('ride-button');
+    let runButton = document.getElementById('run-button');
+    rideButton.classList.toggle("active");
+    runButton.classList.toggle("active");
+  }
 ```
 #### Storing placed markers for map rendering and elevation chart 
 
