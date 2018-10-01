@@ -52,9 +52,6 @@ class RouteCreatorMap extends React.Component {
     this.closeModal = this.closeModal.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.formatRouteType = this.formatRouteType.bind(this);
-    this.formatDistance = this.formatDistance.bind(this);
-    this.formatElevation = this.formatElevation.bind(this);
-    this.formatTime = this.formatTime.bind(this);
 
     this.errors = [];
     this.markers = [];
@@ -360,36 +357,6 @@ class RouteCreatorMap extends React.Component {
     return (this.state.routeType[0].toUpperCase() + this.state.routeType.slice(1));
   }
 
-  formatDistance() {
-    let feet = this.state.length * 3.2808399;
-    let miles = feet / 5280;
-    return (miles.toFixed(2) + " miles");
-  }
-
-  formatElevation() {
-    let feet = this.state.elevationGain * 3.2808399;
-    return (feet.toFixed(0) + " feet");
-  }
-
-  formatTime() {
-    let minutes = (this.state.duration / 60).toFixed(0);
-    let hours = Math.floor(minutes / 60);
-    if (hours < 1) {
-      if (minutes < 10) {
-        return ("0:0" + minutes);
-      } else {
-      return ("0:" + minutes);
-      }
-    } else {
-      minutes = (minutes % 60).toFixed(0);
-      if (minutes < 10) {
-        return (hours + ":0" + minutes);
-      } else {
-        return (hours + ":" + minutes);
-      }
-    }
-  }
-
   // below is from Google Maps API page,
   // https://developers.google.com/maps/documentation/javascript/examples/elevation-paths
 
@@ -508,15 +475,15 @@ class RouteCreatorMap extends React.Component {
                  <div className="button-label" >Route Type</div>
               </li>
               <li>
-                 <strong id="">{this.formatDistance()}</strong>
+                 <strong id="">{formatDistance(this.state.length)}</strong>
                  <div className="button-label" >Distance</div>
               </li>
               <li>
-                 <strong id="">{this.formatElevation()}</strong>
+                 <strong id="">{formatElevation(this.state.elevationGain)}</strong>
                  <div className="button-label" >Elevation Gain</div>
               </li>
               <li>
-                 <strong id="">{this.formatTime()}</strong>
+                 <strong id="">{formatTime(this.state.duration)}</strong>
                  <div className="button-label" >Estimated Moving Time</div>
               </li>
               <li className="button-label" id="show-elevation"
