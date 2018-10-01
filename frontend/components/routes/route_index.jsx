@@ -91,7 +91,7 @@ class RouteIndex extends React.Component {
                           Distance
                         </label>
                         <strong className="route-detail-data-big">
-                          {formatDistance(route)}
+                          {formatDistance(route.length)}
                         </strong>
                       </li>
                       <li className="route-detail-list">
@@ -99,7 +99,7 @@ class RouteIndex extends React.Component {
                           Elevation Gain
                         </label>
                         <strong className="route-detail-data-big">
-                          {formatElevation(route)}
+                          {formatElevation(route.elevationGain)}
                         </strong>
                       </li>
                       <li className="route-detail-list">
@@ -107,7 +107,7 @@ class RouteIndex extends React.Component {
                           Est. Moving Time
                         </label>
                         <strong className="route-detail-data-small">
-                          {formatTime(route)}
+                          {formatTime(route.duration)}
                         </strong>
                       </li>
                       <li className="route-detail-list">

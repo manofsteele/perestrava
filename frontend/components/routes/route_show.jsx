@@ -127,11 +127,11 @@ class RouteShow extends React.Component {
                       <div className="show-stats-line1">
                       <ul className="show-stats-list">
                         <li>
-                        <label className="show-stats-stat-item">{formatDistance(route)}</label><br/>
+                        <label className="show-stats-stat-item">{formatDistance(route.length)}</label><br/>
                         <label className="show-stats-stat-name">Distance</label>
                         </li>
                         <li>
-                        <label className="show-stats-stat-item">{formatElevation(route)}</label><br/>
+                        <label className="show-stats-stat-item">{formatElevation(route.elevationGain)}</label><br/>
                         <label className="show-stats-stat-name">Elevation Gain</label>
                         </li>
                         <li>
@@ -143,7 +143,7 @@ class RouteShow extends React.Component {
 
                       <div className="show-stats-time">
                         <label className="show-stats-stat-name">Est. Moving Time</label>
-                        <label className="show-stats-stat-item">{formatTime(route)}</label>
+                        <label className="show-stats-stat-item">{formatTime(route.duration)}</label>
                       </div>
                     </div>
                 </div>    

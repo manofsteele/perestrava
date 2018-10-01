@@ -1,6 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { withRouter } from 'react-router-dom';
+import {
+  formatDate,
+  formatDistance,
+  formatElevation,
+  formatTime
+} from "../../util/format_util";
 
 // Thank you BenchBnB for the below
 

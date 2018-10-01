@@ -1,16 +1,16 @@
-export const formatDistance = (route) => {
-    let feet = route.length * 3.2808399;
+export const formatDistance = (length) => {
+    let feet = length * 3.2808399;
     let miles = feet / 5280;
     return (miles.toFixed(2) + " miles");
 }
 
-export const formatElevation = (route) => {
-    let feet = route.elevationGain * 3.2808399;
+export const formatElevation = (elevationGain) => {
+    let feet = elevationGain * 3.2808399;
     return (feet.toFixed(0) + " feet");
 }
 
-export const formatTime = (route) => {
-    let minutes = (route.duration / 60).toFixed(0);
+export const formatTime = (duration) => {
+    let minutes = (duration / 60).toFixed(0);
     let hours = Math.floor(minutes / 60);
     if (hours < 1) {
         if (minutes < 10) {
