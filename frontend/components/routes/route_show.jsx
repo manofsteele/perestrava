@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link, withRouter } from 'react-router-dom';
 import { LOGOUT_CURRENT_USER } from '../../actions/session_actions';
+import { formatDate, formatDistance, formatElevation, formatTime } from "../../util/format_util";
+
 
 const urlBase = "https://maps.googleapis.com/maps/api/staticmap?";
 const key = `key=${window.google_maps_api_key}`;
@@ -13,92 +15,23 @@ const checkeredFlag = "https://bit.ly/2MirCBF";
 class RouteShow extends React.Component {
   
 
-  constructor(props) {
-    super(props);
-    this.parseMarkers = this.parseMarkers.bind(this);
-    this.formatTime = this.formatTime.bind(this);
-    this.formatDistance = this.formatDistance.bind(this);
-    this.formatElevation = this.formatElevation.bind(this);
-    this.formatDate = this.formatDate.bind(this);
-    this.plotElevation = this.plotElevation.bind(this);
-    this.markers = [];
-
-  }
+    constructor(props) {
+        super(props);
+        this.parseMarkers = this.parseMarkers.bind(this);
+        this.plotElevation = this.plotElevation.bind(this);
+        this.markers = [];
+    }
   
     handleDelete(routeId) {
         this.props.deleteRoute(routeId).then( () => this.props.history.push("/routes/index"));
     }
 
-  parseMarkers(markerString) {
-    let markers = [];
-    let vals = markerString.split(",");
-    markers.push([vals[0], vals[1]].join(","));
-    markers.push([vals[vals.length - 2], vals[vals.length - 1]].join(","));
-    return markers;
-  }
-
-    formatDistance(route) {
-        let feet = route.length * 3.2808399;
-        let miles = feet / 5280;
-        return (miles.toFixed(2) + " miles");
-    }
-
-    formatElevation(route) {
-        let feet = route.elevationGain * 3.2808399;
-        return (feet.toFixed(0) + " feet");
-    }
-
-    formatTime(route) {
-        let minutes = (route.duration / 60).toFixed(0);
-        let hours = Math.floor(minutes / 60);
-        if (hours < 1) {
-            if (minutes < 10) {
-                return ("0:0" + minutes);
-            } else {
-                return ("0:" + minutes);
-            }
-        } else {
-            minutes = (minutes % 60).toFixed(0);
-            if (minutes < 10) {
-                return (hours + ":0" + minutes);
-            } else {
-                return (hours + ":" + minutes);
-            }
-        }
-    }
-
-    // formatDate courtesy of an App Academy assessment
-
-    formatDate(date) {
-        const months = {
-            0: 'January',
-            1: 'February',
-            2: 'March',
-            3: 'April',
-            4: 'May',
-            5: 'June',
-            6: 'July',
-            7: 'August',
-            8: 'September',
-            9: 'October',
-            10: 'November',
-            11: 'December',
-        };
-        const daysOfWeek = {
-            0: 'Sunday',
-            1: 'Monday',
-            2: 'Tuesday',
-            3: 'Wednesday',
-            4: 'Thursday',
-            5: 'Friday',
-            6: 'Saturday',
-        };
-        const obj = new Date(date);
-        const month = months[obj.getMonth()];
-        const day = obj.getDate();
-        const year = obj.getFullYear();
-        const dayOfWeek = daysOfWeek[obj.getDay()];
-        return `${month} ${day}, ${year}`;
+    parseMarkers(markerString) {
+        let markers = [];
+        let vals = markerString.split(",");
+        markers.push([vals[0], vals[1]].join(","));
+        markers.push([vals[vals.length - 2], vals[vals.length - 1]].join(","));
+        return markers;
     }
 
     plotElevation(elevations, status) {
@@ -189,16 +122,16 @@ class RouteShow extends React.Component {
                       <label className="show-author-name">By {this.props.currentUser.username}</label>
                       </div>
                       <div className="show-date">
-                        <label className="show-date-created">Created on {this.formatDate(route.createdAt)}</label> 
+                        <label className="show-date-created">Created on {formatDate(route.createdAt)}</label> 
                       </div>
                       <div className="show-stats-line1">
                       <ul className="show-stats-list">
                         <li>
-                        <label className="show-stats-stat-item">{this.formatDistance(route)}</label><br/>
+                        <label className="show-stats-stat-item">{formatDistance(route)}</label><br/>
                         <label className="show-stats-stat-name">Distance</label>
                         </li>
                         <li>
-                        <label className="show-stats-stat-item">{this.formatElevation(route)}</label><br/>
+                        <label className="show-stats-stat-item">{formatElevation(route)}</label><br/>
                         <label className="show-stats-stat-name">Elevation Gain</label>
                         </li>
                         <li>
@@ -210,7 +143,7 @@ class RouteShow extends React.Component {
 
                       <div className="show-stats-time">
                         <label className="show-stats-stat-name">Est. Moving Time</label>
-                        <label className="show-stats-stat-item">{this.formatTime(route)}</label>
+                        <label className="show-stats-stat-item">{formatTime(route)}</label>
                       </div>
                     </div>
                 </div>    
