@@ -276,7 +276,8 @@ class RouteCreatorMap extends React.Component {
       this.directionsDisplay.set('directions', null);
       this.setState({
         length: 0,
-        duration: 0
+        duration: 0, 
+        elevationGain: 0
       });
       this.calculateAndDisplayRoute(this.directionsService, this.directionsDisplay);
     }
@@ -297,7 +298,8 @@ class RouteCreatorMap extends React.Component {
       }
       this.setState({
         length: 0,
-        duration: 0
+        duration: 0,
+        elevationGain: 0
       });
       this.markers.forEach(marker => {
         marker.setMap(this.map);
@@ -330,7 +332,8 @@ class RouteCreatorMap extends React.Component {
       this.directionsDisplay.set('directions', null);
       this.setState({
         length: 0,
-        duration: 0
+        duration: 0,
+        elevationGain: 0
       });
      }
   }
