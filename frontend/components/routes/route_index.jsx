@@ -29,6 +29,7 @@ class RouteIndex extends React.Component {
     this.props.deleteRoute(routeId);
   }
 
+  //Here, parseMarkers uses only first and last markers, though all are stored in markerString 
   parseMarkers(markerString) {
     let markers = [];
     let vals = markerString.split(",");

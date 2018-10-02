@@ -228,10 +228,13 @@ class RouteCreatorMap extends React.Component {
 
     });
 
-    let origin = {lat: positions[0].location.lat, lng: positions[0].location.lng};
-    let destination = {lat: positions[positions.length - 1].location.lat, lng: positions[positions.length -1].location.lng};
-
-    this.state.markerString = [origin.lat, origin.lng, destination.lat, destination.lng].join(",");
+    // Save all markers in the string for future use
+    let positionVals = [];
+    positions.forEach(position => {
+      positionVals.push(position.location.lat);
+      positionVals.push(position.location.lng);
+    });
+    this.state.markerString = positionVals.join(",");
 
     let mode;
     if (this.state.routeType === "bike") {

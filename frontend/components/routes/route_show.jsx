@@ -19,7 +19,10 @@ class RouteShow extends React.Component {
         super(props);
         this.parseMarkers = this.parseMarkers.bind(this);
         this.plotElevation = this.plotElevation.bind(this);
-        this.markers = [];
+        this.markers = [];  // this is for first and last markers on map
+        this.allMarkers = [];  // this is for elevation calculation
+        this.elevator = new google.maps.ElevationService;
+
     }
   
     handleDelete(routeId) {
@@ -28,7 +31,12 @@ class RouteShow extends React.Component {
 
     parseMarkers(markerString) {
         let markers = [];
+        let allMarkers = [];
         let vals = markerString.split(",");
+        for (let i = 0; i < vals.length; i += 2) {
+          allMarkers.push({lat: parseFloat(vals[i]), lng: parseFloat(vals[i + 1])});
+        }
+        this.allMarkers = allMarkers;
         markers.push([vals[0], vals[1]].join(","));
         markers.push([vals[vals.length - 2], vals[vals.length - 1]].join(","));
         return markers;
@@ -93,8 +101,6 @@ class RouteShow extends React.Component {
 
   componentDidMount() {
     this.props.fetchRoute(this.props.match.params.id);
-    this.elevator = new google.maps.ElevationService;
-
   }
 
   render() {
@@ -107,6 +113,11 @@ class RouteShow extends React.Component {
         let endMarkerKey = `&markers=icon:${checkeredFlag}|${this.markers[this.markers.length - 1]}`;
         let src = urlBase + size + "&path=weight:2|color:blue|enc:" + route.polyline + startMarkerKey + endMarkerKey + "&" + key;
         let workoutType = route.routeType === "bike" ? "Cycling" : "Running";
+        console.log(this.allMarkers);
+        this.elevator.getElevationAlongPath({
+            'path': this.allMarkers,
+            'samples': 256
+        }, this.plotElevation);
         return (
 
             <div className="show">
@@ -147,14 +158,16 @@ class RouteShow extends React.Component {
                       </div>
                     </div>
                 </div>    
-                {/* <div className="show-elevation">
-                    <div className="elevation-chart" id="elevation-chart">
+                <div className="show-elevation">
+                    <div className="show-elevation-chart" id="elevation-chart">
 
                     </div>
-                </div>     */}
+                </div>
+                <div className="delete-button-div">    
                 <button className="show-delete-button" onClick={() => this.handleDelete(route.id)}>
                     Delete Route
                 </button>
+                </div>
             </div>
         );
     } else { 

@@ -76,13 +76,27 @@
   margin-right: 20px;
 }
 
+.show-elevation {
+  max-width: 900px;
+}
+
+.show-elevation-chart {
+  height: 200px;
+  background: white;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 .show-delete-button {
   border: 1px solid #e6e6eb;
   border-radius: 2px;
   font-family: 'Russo', sans-serif;
   font-size: 16px;
   padding: 10px 16px;
-  margin-top: 20px;
   margin-left: 20px; 
   width: 100px; 
+}
+
+.delete-button-div {
+  margin-bottom: 20px;
 }
