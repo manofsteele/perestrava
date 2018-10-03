@@ -18,8 +18,9 @@ class RouteShow extends React.Component {
     constructor(props) {
         super(props);
         this.parseMarkers = this.parseMarkers.bind(this);
+        this.getAllMarkers = this.getAllMarkers.bind(this);
         this.plotElevation = this.plotElevation.bind(this);
-        this.markers = [];  // this is for first and last markers on map
+        // this.markers = [];  // this is for first and last markers on map
         this.allMarkers = [];  // this is for elevation calculation
         this.elevator = new google.maps.ElevationService;
 
@@ -31,18 +32,23 @@ class RouteShow extends React.Component {
 
     parseMarkers(markerString) {
         let markers = [];
-        let allMarkers = [];
         let vals = markerString.split(",");
-        for (let i = 0; i < vals.length; i += 2) {
-          allMarkers.push({lat: parseFloat(vals[i]), lng: parseFloat(vals[i + 1])});
-        }
-        this.allMarkers = allMarkers;
         markers.push([vals[0], vals[1]].join(","));
         markers.push([vals[vals.length - 2], vals[vals.length - 1]].join(","));
         return markers;
     }
 
+    getAllMarkers(markerString) {
+        let allMarkers = [];
+        let vals = markerString.split(",");
+        for (let i = 0; i < vals.length; i += 2) {
+            allMarkers.push({ lat: parseFloat(vals[i]), lng: parseFloat(vals[i + 1]) });
+        }
+        this.allMarkers = allMarkers;
+    }
+
     plotElevation(elevations, status) {
+        console.log(this.allMarkers);
         var chartDiv = document.getElementById('elevation-chart');
         if (status !== 'OK') {
             // Show the error code inside the chartDiv.
@@ -66,7 +72,7 @@ class RouteShow extends React.Component {
 
         let gain = 0;
         let change = 0;
-        if (this.markers.length <= 1) {
+        if (this.allMarkers.length <= 1) {
             this.setState({ elevationGain: 0 });
             data = new google.visualization.DataTable();
             data.addColumn('string', 'Sample');
@@ -108,9 +114,10 @@ class RouteShow extends React.Component {
     // || { id: "loading", name: "loading", description: "loading", length: 0, polyline: ""};
 
     if (route !== undefined) {
-        this.markers = this.parseMarkers(route.markerString);
-        let startMarkerKey = `&markers=icon:${greenDot}|${this.markers[0]}`;
-        let endMarkerKey = `&markers=icon:${checkeredFlag}|${this.markers[this.markers.length - 1]}`;
+        let markers = this.parseMarkers(route.markerString);
+        this.getAllMarkers(route.markerString);
+        let startMarkerKey = `&markers=icon:${greenDot}|${markers[0]}`;
+        let endMarkerKey = `&markers=icon:${checkeredFlag}|${markers[markers.length - 1]}`;
         let src = urlBase + size + "&path=weight:2|color:blue|enc:" + route.polyline + startMarkerKey + endMarkerKey + "&" + key;
         let workoutType = route.routeType === "bike" ? "Cycling" : "Running";
         console.log(this.allMarkers);
