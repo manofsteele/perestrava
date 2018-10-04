@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link, withRouter } from 'react-router-dom';
-import { LOGOUT_CURRENT_USER } from '../../actions/session_actions';
 import { formatDate, formatDistance, formatElevation, formatTime } from "../../util/format_util";
 
 
@@ -48,7 +47,6 @@ class RouteShow extends React.Component {
     }
 
     plotElevation(elevations, status) {
-        console.log(this.allMarkers);
         var chartDiv = document.getElementById('elevation-chart');
         if (status !== 'OK') {
             // Show the error code inside the chartDiv.
