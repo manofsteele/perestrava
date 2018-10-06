@@ -10,31 +10,42 @@ const size = "size=600x400";
 const greenDot = "https://bit.ly/2PfTgwD";
 const checkeredFlag = "https://bit.ly/2MirCBF";
 
+const mapStyles = {
+    hide: [
+        {
+            featureType: "poi",
+            elementType: "labels",
+            stylers: [{ visibility: "off" }]
+        }
+    ]
+};
+
+const mapOptions = {
+    center: {
+        lat: 37.773942,
+        lng: -122.431297
+    },
+    zoom: 13,
+    clickableIcons: false,
+    gestureHandling: 'greedy',
+    styles: mapStyles['hide'],
+    zoomControlOptions: {
+        position: google.maps.ControlPosition.LEFT_TOP
+    }
+};
 
 class RouteShow extends React.Component {
   
-
     constructor(props) {
         super(props);
-        this.parseMarkers = this.parseMarkers.bind(this);
         this.getAllMarkers = this.getAllMarkers.bind(this);
         this.plotElevation = this.plotElevation.bind(this);
-        // this.markers = [];  // this is for first and last markers on map
         this.allMarkers = [];  // this is for elevation calculation
         this.elevator = new google.maps.ElevationService;
-
     }
   
     handleDelete(routeId) {
         this.props.deleteRoute(routeId).then( () => this.props.history.push("/routes/index"));
-    }
-
-    parseMarkers(markerString) {
-        let markers = [];
-        let vals = markerString.split(",");
-        markers.push([vals[0], vals[1]].join(","));
-        markers.push([vals[vals.length - 2], vals[vals.length - 1]].join(","));
-        return markers;
     }
 
     getAllMarkers(markerString) {
@@ -105,24 +116,49 @@ class RouteShow extends React.Component {
 
   componentDidMount() {
     this.props.fetchRoute(this.props.match.params.id);
+    const map = this.refs.map;
+    this.map = new google.maps.Map(map, mapOptions);
   }
 
   render() {
     let route = this.props.route; 
-    // || { id: "loading", name: "loading", description: "loading", length: 0, polyline: ""};
 
     if (route !== undefined) {
-        let markers = this.parseMarkers(route.markerString);
+        // let markers = this.parseMarkers(route.markerString);
         this.getAllMarkers(route.markerString);
-        let startMarkerKey = `&markers=icon:${greenDot}|${markers[0]}`;
-        let endMarkerKey = `&markers=icon:${checkeredFlag}|${markers[markers.length - 1]}`;
-        let src = urlBase + size + "&path=weight:2|color:blue|enc:" + route.polyline + startMarkerKey + endMarkerKey + "&" + key;
         let workoutType = route.routeType === "bike" ? "Cycling" : "Running";
-        console.log(this.allMarkers);
+        let startMarker = new google.maps.Marker({
+            position: this.allMarkers[0],
+            map: this.map,
+            icon: greenDot
+        });
+        let endMarker = new google.maps.Marker({
+            position: this.allMarkers[this.allMarkers.length - 1],
+            map: this.map,
+            icon: checkeredFlag
+        });
         this.elevator.getElevationAlongPath({
             'path': this.allMarkers,
             'samples': 256
         }, this.plotElevation);
+        let path = google.maps.geometry.encoding.decodePath(route.polyline);
+        let polyline = new google.maps.Polyline({
+            path: path,
+            strokeColor: '#0013E5',
+            strokeOpacity: 1.0,
+            strokeWeight: 2
+        });
+
+        let bounds = new google.maps.LatLngBounds();
+        path.forEach(coordinate => {
+            bounds.extend(coordinate);
+        });
+
+        polyline.setMap(this.map);
+        let map = this.refs.map; 
+        if (this.map !== undefined) {
+          this.map.fitBounds(bounds);
+        }
         return (
 
             <div className="show">
@@ -131,8 +167,11 @@ class RouteShow extends React.Component {
                     <h1 className="show-title">{route.name}</h1>
                 </div>
                 <div className="show-map-and-stats" >
-                    <div className="show-map" style={{ backgroundImage: `url(${encodeURI(src)})` }}>
+                    <div className="show-map" ref="map">
+                        Map
                     </div>
+                    {/* <div className="show-map" style={{ backgroundImage: `url(${encodeURI(src)})` }}>
+                    </div> */}
                     <div className="show-stats"> 
                       <div className="show-author">
                       <label className="show-author-name">By {this.props.currentUser.username}</label>
