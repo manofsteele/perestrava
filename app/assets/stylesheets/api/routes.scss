@@ -3,7 +3,8 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .map-container {
-  display: block;
+  display: flex;
+  flex-direction: column;
   width: 100%;
 }
 
