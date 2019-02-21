@@ -110,6 +110,7 @@ class RouteShow extends React.Component {
                 height: 200,
                 legend: 'none',
                 titleY: 'Elevation (m)',
+                titleFontSize: 20
             });
         }
     }
